@@ -1,0 +1,17 @@
+# Disposable LOCAL test database, never use for production data.
+services:
+  schema-postgres:
+    image: postgres:17
+    ports:
+      - "127.0.0.1:55432:5432"
+    environment:
+      POSTGRES_USER: cargohub_test
+      POSTGRES_PASSWORD: ch012-local-disposable
+      POSTGRES_DB: postgres
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cargohub_test -d postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
