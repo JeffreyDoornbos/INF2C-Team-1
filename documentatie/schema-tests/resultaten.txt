@@ -1,0 +1,65 @@
+PASS 1: Empty database migrated; repeat migration is harmless; snapshot matches model
+PASS 2: Valid related records, two locations per item and optional/multiple shipments per order accepted
+PASS 3: Duplicate primary key: warehouse
+PASS 4: Duplicate primary key: location
+PASS 5: Duplicate primary key: supplier
+PASS 6: Duplicate primary key: item_line
+PASS 7: Duplicate primary key: item_group
+PASS 8: Duplicate primary key: item_type
+PASS 9: Duplicate primary key: item
+PASS 10: Duplicate primary key: inventory
+PASS 11: Duplicate primary key: transfer
+PASS 12: Duplicate primary key: transfer_item
+PASS 13: Duplicate primary key: client
+PASS 14: Duplicate primary key: order
+PASS 15: Duplicate primary key: shipment
+PASS 16: Duplicate primary key: order_item
+PASS 17: Duplicate primary key: shipment_item
+PASS 18: Missing referenced record: location.warehouse_id
+PASS 19: Missing referenced record: item.supplier_id
+PASS 20: Missing referenced record: item.item_line_id
+PASS 21: Missing referenced record: item.item_group_id
+PASS 22: Missing referenced record: item.item_type_id
+PASS 23: Missing referenced record: inventory.item_id
+PASS 24: Missing referenced record: inventory.location_id
+PASS 25: Missing referenced record: transfer.from_location_id
+PASS 26: Missing referenced record: transfer.to_location_id
+PASS 27: Missing referenced record: transfer_item.transfer_id
+PASS 28: Missing referenced record: transfer_item.item_id
+PASS 29: Missing referenced record: order.client_id
+PASS 30: Missing referenced record: order.ship_to_client_id
+PASS 31: Missing referenced record: order.bill_to_client_id
+PASS 32: Missing referenced record: order.warehouse_id
+PASS 33: Missing referenced record: shipment.order_id
+PASS 34: Missing referenced record: order_item.order_id
+PASS 35: Missing referenced record: order_item.item_id
+PASS 36: Missing referenced record: shipment_item.shipment_id
+PASS 37: Missing referenced record: shipment_item.item_id
+PASS 38: Referenced parent cannot be deleted: warehouse
+PASS 39: Referenced parent cannot be deleted: location
+PASS 40: Referenced parent cannot be deleted: supplier
+PASS 41: Referenced parent cannot be deleted: item_line
+PASS 42: Referenced parent cannot be deleted: item_group
+PASS 43: Referenced parent cannot be deleted: item_type
+PASS 44: Referenced parent cannot be deleted: item
+PASS 45: Referenced parent cannot be deleted: transfer
+PASS 46: Referenced parent cannot be deleted: client
+PASS 47: Referenced parent cannot be deleted: order
+PASS 48: Referenced parent cannot be deleted: shipment
+PASS 49: Negative quantity_on_hand
+PASS 50: Negative quantity_expected
+PASS 51: Negative quantity_ordered
+PASS 52: Negative quantity_allocated
+PASS 53: Invalid transfer amount 0
+PASS 54: Invalid transfer amount -1
+PASS 55: Same source and destination
+PASS 56: Unknown status
+PASS 57: Unknown order status
+PASS 58: Unknown shipment status
+PASS 59: Invalid order amount
+PASS 60: Invalid shipment amount
+PASS 61: Negative unit price
+PASS 62: Null key
+PASS 63: Scheduled default and Processed status accepted (not a transfer-service test)
+PASS 64: Down migration and reapplication succeed
+PASS: 64 checks. Temporary database will be removed.
