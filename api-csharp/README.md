@@ -16,6 +16,16 @@ dotnet run --project api-csharp --launch-profile http
 
 De API gebruikt `http://localhost:5268`. Migraties worden bewust apart uitgevoerd, niet automatisch bij iedere API-start. De bestaande Python-API staat in `api/` en kan apart worden gestart met `./start-system.sh`.
 
+## Oude JSON data laden
+
+Voer na de migraties de eenmalige beginimport uit tegen dezelfde database:
+
+```sh
+psql -h localhost -p 5432 -U postgres -d cargohub -f database/postgresql/import-legacy-json.sql
+```
+
+Pas de verbindingsgegevens aan jullie server aan. Alle vijftien zakelijke tabellen moeten leeg zijn. De import volgt dit EF Core-model en vult 80.465 records, inclusief de oude IDs en timestamps. Order- en verzenddatums worden volgens de `DateOnly`-properties naar een UTC-datum omgezet. `user.json` valt buiten dit model en wordt niet geladen. Zie [importinstructies](../database/postgresql/IMPORT-ANMOL.md).
+
 ## Databasecontroles
 
 Start de lokale, uitsluitend voor tests bedoelde PostgreSQL-service:
