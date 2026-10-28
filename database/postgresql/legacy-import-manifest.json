@@ -1,0 +1,132 @@
+{
+  "target_schema": "public",
+  "required_migrations": [
+    "20261015111621_InitialBaseline",
+    "20261015113203_EnforceApprovedPilotRules"
+  ],
+  "total_records": 80465,
+  "excluded_files": {
+    "data/user.json": "Not part of Anmol's EF Core model; handled separately in CH-020."
+  },
+  "conversions": {
+    "order.order_date": "UTC calendar date only, following DateOnly",
+    "order.request_date": "UTC calendar date only, following DateOnly",
+    "shipment.shipment_date": "UTC calendar date only, following DateOnly",
+    "item.commodity_code": "JSON integer converted to text",
+    "created_at/updated_at": "UTC timestamp, retaining the instant"
+  },
+  "sources": {
+    "warehouse": {
+      "file": "data/warehouse.json",
+      "records": 10,
+      "sha256": "406281e1767afd3aed0388f9b81dd8096005fb7dbd5a3985b012fd9e44babf84",
+      "timestamp_to_date_conversions": {}
+    },
+    "client": {
+      "file": "data/client.json",
+      "records": 300,
+      "sha256": "4bd89691c473ba367a5766b264c0652fbb3180d298ef68e3faae5516c17e1ab4",
+      "timestamp_to_date_conversions": {}
+    },
+    "supplier": {
+      "file": "data/supplier.json",
+      "records": 21,
+      "sha256": "c628998a962fa0dd6ea6d73f8e5337c91651af30c3d2c4f18ed0bcba9d6d26a8",
+      "timestamp_to_date_conversions": {}
+    },
+    "item_line": {
+      "file": "data/item_line.json",
+      "records": 14,
+      "sha256": "ae19362f2082bc2add924afd0e387816c89903be8f303255c3d8ae606630105b",
+      "timestamp_to_date_conversions": {}
+    },
+    "item_group": {
+      "file": "data/item_group.json",
+      "records": 3,
+      "sha256": "3f6e6eab3d82758e2034d737fce3e179efa24f538317aa2a974a658b3c892f8b",
+      "timestamp_to_date_conversions": {}
+    },
+    "item_type": {
+      "file": "data/item_type.json",
+      "records": 3,
+      "sha256": "c017a81dca98916b1154b51063208c51921d58fd14b7efff4b9ed7c248412596",
+      "timestamp_to_date_conversions": {}
+    },
+    "location": {
+      "file": "data/location.json",
+      "records": 400,
+      "sha256": "43536a23da370bb4b67d6e2e35e67182059ee7a41cdfdd4d6d87ed232685aa6d",
+      "timestamp_to_date_conversions": {}
+    },
+    "item": {
+      "file": "data/item.json",
+      "records": 600,
+      "sha256": "118f7a3d10f9f2b5fd55ec28043d856dc5b5eb7af66d2b2958c27d7b19dcbc68",
+      "timestamp_to_date_conversions": {}
+    },
+    "inventory": {
+      "file": "data/inventory.json",
+      "records": 4800,
+      "sha256": "5f8bb30b5a6b6ea4d3be0100d04ba78c86206cfbd43c90c0c70df8dea3e16b2c",
+      "timestamp_to_date_conversions": {}
+    },
+    "order": {
+      "file": "data/order.json",
+      "records": 4854,
+      "sha256": "9f9c2e7ec7d1dcdc5f0b877f237a14da980fe7dc03be5ff68b4c632d6dfe6e42",
+      "timestamp_to_date_conversions": {
+        "order_date": 4854,
+        "request_date": 4854
+      }
+    },
+    "order_item": {
+      "file": "data/order_item.json",
+      "records": 26498,
+      "sha256": "ae87586de45f9bdcbca39190efa54b7ed97b875c58fcfbb9113b3a72870ed6c6",
+      "timestamp_to_date_conversions": {}
+    },
+    "shipment": {
+      "file": "data/shipment.json",
+      "records": 6132,
+      "sha256": "7990d38c4c43e6c19fa51f71cff7df2deeb7fed2ff056daca9c26d055e0916e7",
+      "timestamp_to_date_conversions": {
+        "shipment_date": 6132
+      }
+    },
+    "shipment_item": {
+      "file": "data/shipment_item.json",
+      "records": 33660,
+      "sha256": "cf0d8f646b229ed4f5f368d000a55321e405bbd3a2007cb89da5d6031e5ec3ed",
+      "timestamp_to_date_conversions": {}
+    },
+    "transfer": {
+      "file": "data/transfer.json",
+      "records": 800,
+      "sha256": "5c8aa50d0c406b81671e96fb9086041abdef2926d5af5cf68b447e0238093727",
+      "timestamp_to_date_conversions": {}
+    },
+    "transfer_item": {
+      "file": "data/transfer_item.json",
+      "records": 2370,
+      "sha256": "2cba53549817ee8ee5d4ebe92384898013e2f2f2a335a60ec3db389a9cee00f0",
+      "timestamp_to_date_conversions": {}
+    }
+  },
+  "entity_sha256": {
+    "api-csharp/Domain/Warehouse.cs": "6b6daab185210c939c153dc90ad1e2bcf9d511e1743a594221cbc2a24f761d96",
+    "api-csharp/Domain/Client.cs": "a7b4ebc3e8537156e786912e8ff3a46baf5c2795c283f9d025b298ef8a57e913",
+    "api-csharp/Domain/Supplier.cs": "beb4db49d440a2eb6871be63170de74d6dafb103504e8c76c47c32da73a355cd",
+    "api-csharp/Domain/ItemLine.cs": "d249831bbef35ca35f6af6eda7fd0d0001c53251c6bf2488bf79805285fdeb68",
+    "api-csharp/Domain/ItemGroup.cs": "1240fc0404b7cf5f5ba2394dcbf81d147ed0edfdf9aa92f8b8abe676ba02631b",
+    "api-csharp/Domain/ItemType.cs": "0387a88d7ce63c94e66a69ba611a4f69c76654b69ad7798421a06fee7ae355a5",
+    "api-csharp/Domain/Location.cs": "03952bbe483dd312ee37cefbaa566246dc509b97674b11b1feb3b0f3c29ab879",
+    "api-csharp/Domain/Item.cs": "e5e4360b27adef34d57acfcbc15acc531c0852c5de56e8e06e3a8adef23ee33b",
+    "api-csharp/Domain/Inventory.cs": "5ab426724a2c1ad01ef29e542378789f243f3112e1e42b34eccbf9b89a148f8b",
+    "api-csharp/Domain/Order.cs": "c6a206ba73f13b1f2c16f93937ed18881cdceb75276778b6c4a489d46510bbcd",
+    "api-csharp/Domain/OrderItem.cs": "81166cc5832a29e9b37177ddf9b762c420d49efd93bb3741bb4a5a421fe871f7",
+    "api-csharp/Domain/Shipment.cs": "17a04b4de80fd49a59b4c0b61bb64fe94ed59649dc3e875f0483ae2617e02190",
+    "api-csharp/Domain/ShipmentItem.cs": "fcee92a40d66e6ccbcfff5464a83535e96d5400cbac0081bd8328a27e26589c3",
+    "api-csharp/Domain/Transfer.cs": "1ec46fc6174d59cb1e460cdf562140a39c7cef46183aa411e4c9f6d97d24cd4d",
+    "api-csharp/Domain/TransferItem.cs": "b20bbec81d2bc473ac3a0db426c077e3aac22aa598337ead25bbe830a5c9eb2a"
+  }
+}
