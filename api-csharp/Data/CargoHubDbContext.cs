@@ -6,6 +6,14 @@ namespace CargoHub.Api.Data;
 
 public sealed class CargoHubDbContext(DbContextOptions<CargoHubDbContext> options) : DbContext(options)
 {
+
+    // DbSet properties provide database access for each domain entity
+    public DbSet<Warehouse> Warehouses => Set<Warehouse>();
+    public DbSet<Location> Locations => Set<Location>();
+    public DbSet<Item> Items => Set<Item>();
+    public DbSet<Inventory> Inventories => Set<Inventory>();
+
+    
     protected override void OnModelCreating(ModelBuilder model)
     {
         model.Entity<Warehouse>().ToTable("warehouse");
