@@ -11,6 +11,8 @@ public sealed class CargoHubDbContext(DbContextOptions<CargoHubDbContext> option
     public DbSet<Warehouse> Warehouses => Set<Warehouse>();
     public DbSet<Location> Locations => Set<Location>();
     public DbSet<Item> Items => Set<Item>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<Inventory> Inventories => Set<Inventory>();
 
     
