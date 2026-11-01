@@ -7,3 +7,8 @@ __pycache__/
 **/bin/
 **/obj/
 .env
+
+bin/
+obj/
+**/bin/
+**/obj/
