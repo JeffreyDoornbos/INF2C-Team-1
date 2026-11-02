@@ -73,3 +73,28 @@ public sealed class OrderWriteRequest
     // null: don't touch items during PUT; []: clear all items.
     [JsonPropertyName("items")] public List<OrderItemWriteRequest>? Items { get; set; }
 }
+
+public sealed class OrderItemResponse
+{
+    [JsonPropertyName("item_id")] public int ItemId { get; set; }
+    [JsonPropertyName("amount")] public int Amount { get; set; }
+}
+
+public sealed class OrderResponse
+{
+    [JsonPropertyName("id")] public int Id { get; set; }
+    [JsonPropertyName("client_id")] public int ClientId { get; set; }
+    [JsonPropertyName("order_date")] public DateOnly OrderDate { get; set; }
+    [JsonPropertyName("request_date")] public DateOnly RequestDate { get; set; }
+    [JsonPropertyName("reference")] public string Reference { get; set; } = "";
+    [JsonPropertyName("customer_po_number")] public string CustomerPoNumber { get; set; } = "";
+    [JsonPropertyName("order_status")] public string OrderStatus { get; set; } = "";
+    [JsonPropertyName("shipping_notes")] public string? ShippingNotes { get; set; }
+    [JsonPropertyName("warehouse_id")] public int WarehouseId { get; set; }
+    [JsonPropertyName("ship_to_client_id")] public int ShipToClientId { get; set; }
+    [JsonPropertyName("bill_to_client_id")] public int BillToClientId { get; set; }
+    [JsonPropertyName("created_at")] public DateTimeOffset CreatedAt { get; set; }
+    [JsonPropertyName("updated_at")] public DateTimeOffset UpdatedAt { get; set; }
+    [JsonPropertyName("items")] public List<OrderItemResponse> Items { get; set; } = [];
+}
+
