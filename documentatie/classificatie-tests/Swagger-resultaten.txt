@@ -1,0 +1,22 @@
+Swagger-verificatie - 2 november 2026
+
+Omgeving: .NET 10.0.401, Swashbuckle.AspNetCore 10.2.3, PostgreSQL 16.14.
+Alle schrijfacties uitgevoerd in een afzonderlijke tijdelijke database.
+
+PASS: API-build, 0 waarschuwingen en 0 fouten.
+PASS: OpenAPI JSON bevat 43 huidige methode-padcombinaties op 22 paden.
+PASS: Alle acties hebben een Nederlandse samenvatting, uitleg en responses.
+PASS: Iedere POST en PUT heeft een ingevuld JSON-requestvoorbeeld.
+PASS: Acht Nederlandse resourcegroepen, zonder lege controllergroepen.
+PASS: Gegenereerde classificatieschema's gebruiken de vijf snake_case-velden.
+PASS: Swagger UI geladen in browser; Try it out en Execute op de voorbeeld-POST geven 201.
+PASS: Het via Swagger aangemaakte record is via HTTP opgehaald en gewijzigd met het PUT-voorbeeld.
+PASS: Opnieuw aanmaken met hetzelfde ID geeft 409; verwijderen geeft 200; daaropvolgende GET geeft 200 met null.
+PASS: ProblemDetails-voorbeelden hebben een passende status en application/problem+json.
+PASS: Development biedt Swagger standaard aan (200).
+PASS: Production biedt Swagger standaard niet aan (404).
+PASS: Production met Swagger__Enabled=true biedt document en UI aan (200).
+PASS: Bestaande classificatieverifier: 71 van 71 controles, echte HTTP en PostgreSQL.
+PASS: git diff --check.
+
+Geen deployment uitgevoerd. Authenticatie en bestaande API-logica zijn niet aangepast.

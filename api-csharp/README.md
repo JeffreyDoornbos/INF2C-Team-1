@@ -60,3 +60,29 @@ dotnet run --project tests/CargoHub.ClassificationChecks
 ```
 
 Deze verifier maakt een eigen tijdelijke database, past de bestaande migraties toe en start de echte API. Hij controleert de classificatie-CRUD, snake_case-JSON, blijvende opslag na API-herstarts en de aansluiting op de bestaande controllers en filters. De database en API-processen worden na afloop opgeruimd. Er zijn geen extra NuGet-testpakketten nodig. Zie [CH-029: routes en testresultaten](../documentatie/CH-029-item-classifications.md).
+
+## Swagger en presentatiedemo
+
+Start de API met de ingestelde PostgreSQL-verbinding en de bestaande migraties:
+
+```sh
+dotnet run --project api-csharp --launch-profile http
+```
+
+Open **http://localhost:5268/swagger**. De startprofielen openen deze pagina automatisch. Alle 43 huidige methode-padcombinaties staan gegroepeerd per onderwerp, inclusief de oude voorraadroute die altijd 404 geeft. Elk endpoint bevat Nederlandse uitleg, statuscodes en voorbeelden. Met **Try it out** en **Execute** stuur je echte aanvragen en zie je de statuscode en het antwoord van de server. Het OpenAPI-bestand staat op `/swagger/v1/swagger.json`.
+
+Swagger staat standaard aan in Development. Voor een expliciete demo buiten Development stel je `Swagger__Enabled=true` in. Met `Swagger__Enabled=false` kun je het uitschakelen. De documentatie voegt geen authenticatie toe; die ontbreekt momenteel nog in de API.
+
+### Korte demonstratie voor de docent
+
+Gebruik een aparte demodatabase. Controleer eerst met GET dat ID **900001** nog vrij is. De voorbeelden zijn fictief en worden pas opgeslagen wanneer je een schrijfactie uitvoert.
+
+1. Open **Artikelgroepen**, kies `POST /api/v1/item_groups` en klik **Try it out**. Laat de voorbeeldbody staan en klik **Execute**. Verwacht **201**, zonder responsebody.
+2. Kies `GET /api/v1/item_groups/{id}`, vul **900001** in en voer uit. Verwacht **200**, met de groep en timestamps van de server.
+3. Kies `PUT /api/v1/item_groups/{id}`, gebruik **900001** en de ingevulde voorbeeldbody met de gewijzigde naam. Verwacht **200**, zonder responsebody. Haal de groep opnieuw op om de wijziging te tonen.
+4. Kies `DELETE /api/v1/item_groups/{id}` met **900001**. Verwacht **200**. Een volgende GET geeft **200** met `null`, zoals in Python.
+5. Laat eventueel een fout zien: voer dezelfde POST tweemaal uit voordat je de groep verwijdert. De tweede aanvraag geeft **409**, omdat het ID al bestaat. Ruim daarna je eigen demogroep op.
+
+Voorbeelden voor magazijnen, locaties, artikelen en voorraad staan er ook in. Maak bij een gekoppelde demo eerst de bovenliggende records aan: magazijn, locatie, artikel en daarna voorraad. Het locatievoorbeeld verwijst standaard naar magazijn **1**; pas dit aan naar **900001** als je het demomagazijn gebruikt. Het artikelvoorbeeld verwijst naar bestaande classificaties en leverancier **1**; kies IDs uit jullie eigen database. Het voorraadvoorbeeld gebruikt demoartikel en demolocatie **900001**. Verwijder na afloop eerst voorraad, daarna artikel en locatie, en als laatste magazijn. `commodity_code` moet in de huidige C#-API als tekst worden verstuurd.
+
+De documentatie toont ook de bestaande beperkingen: enkele databasefouten geven nu nog **500**. Swagger verandert deze afhandeling en de API-logica niet.
