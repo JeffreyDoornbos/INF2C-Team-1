@@ -26,3 +26,17 @@ PASS: Acht Swagger-groepen bevatten de auteur en een toelichting.
 PASS: Alle 43 acties hebben de juiste vermelding: 15 Jeffrey Doornbos, 28 Artur.
 PASS: De drie classificatie-/items-routes vermelden Artur binnen Jeffreys classificatiegroepen.
 PASS: Build zonder fouten of waarschuwingen; git diff --check.
+
+Aanvulling lokale databaseconfiguratie:
+Oorzaak van Configure ConnectionStrings__CargoHub: de door de gebruiker gestarte API had geen verbinding ingesteld.
+Een aparte lokale cargohub_demo-database is aangemaakt met de bestaande migraties en legacy-import.
+De lokale verbinding staat buiten Git in .NET User Secrets. De migratiefactory leest die nu ook; omgevingsvariabelen hebben voorrang.
+PASS: EF database update zonder verbindingsvariabele gebruikt de lokaal opgeslagen verbinding; schema is actueel.
+PASS: Alle 22 GET-acties via localhost:5268 getest met geïmporteerde data; de oude voorraad-ID-route geeft zoals gedocumenteerd 404.
+PASS: Alle zeven POST- en zeven PUT-voorbeelden getest; gekoppelde IDs aangepast naar eigen demorecords.
+PASS: Alle zeven DELETE-acties getest; uitsluitend de eigen demorecords opgeruimd.
+PASS: Drie dubbele classificatie-IDs geven 409; ongeldig artikelfilter en numerieke commodity_code geven 400.
+PASS: In totaal alle 43 gedocumenteerde acties gecontroleerd met 55 assertions.
+PASS: Na opruimen staan er nog precies de 80.465 geïmporteerde zakelijke records.
+PASS: Swagger UI en warehouses geven HTTP 200 op localhost:5268.
+De lokale API blijft gestart voor de gebruiker. Geen deployment naar Ubuntu uitgevoerd.

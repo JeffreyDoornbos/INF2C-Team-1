@@ -6,6 +6,14 @@ ASP.NET Core (.NET 10) met EF Core en Npgsql voor PostgreSQL. De databasebasis i
 
 Vereist: .NET 10 SDK en een bereikbare PostgreSQL-database. Stel `ConnectionStrings__CargoHub` in via de omgeving, met host, database, gebruikersnaam en wachtwoord. Commit geen echte verbindingsgegevens.
 
+Je kunt de verbinding voor lokale ontwikkeling ook eenmalig bewaren met .NET User Secrets. Zowel de API in Development als de EF-migratiecommando's lezen die instelling. Omgevingsvariabelen hebben voorrang.
+
+```sh
+dotnet user-secrets set 'ConnectionStrings:CargoHub' 'Host=localhost;Port=5432;Database=cargohub;Username=JOUW_GEBRUIKER;Password=JOUW_WACHTWOORD' --project api-csharp
+```
+
+Vervang de voorbeeldwaarden door je eigen verbinding. De waarde wordt buiten Git opgeslagen. Na wijzigen van de verbinding moet je de API herstarten. De fout `Configure ConnectionStrings__CargoHub` betekent dat de verbinding nog niet is ingesteld; Swagger heeft dezelfde database nodig als iedere andere API-client.
+
 Vanuit de repositoryroot:
 
 ```sh
