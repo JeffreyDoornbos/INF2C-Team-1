@@ -48,3 +48,11 @@ public sealed class OrdersController(CargoHubDbContext context) : ControllerBase
         return Ok();
     }
 }
+
+// DTOs avoid exposing EF entities.
+public sealed class OrderItemWriteRequest
+{
+    [JsonPropertyName("item_id")] public int ItemId { get; set; }
+    [JsonPropertyName("amount")] public int Amount { get; set; }
+    [JsonPropertyName("unit_price")] public decimal? UnitPrice { get; set; }
+}
