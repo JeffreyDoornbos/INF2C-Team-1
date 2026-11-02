@@ -98,3 +98,57 @@ public sealed class OrderResponse
     [JsonPropertyName("items")] public List<OrderItemResponse> Items { get; set; } = [];
 }
 
+public sealed class OrderService(CargoHubDbContext context)
+{
+    public async Task<List<OrderResponse>> GetOrdersAsync(int? clientId, CancellationToken ct = default)
+    {
+        var query = context.Orders.AsNoTracking().AsQueryable();
+        if (clientId.HasValue)
+            query = query.Where(o => o.ClientId == clientId || o.ShipToClientId == clientId || o.BillToClientId == clientId);
+        var orders = await query.OrderBy(o => o.Id).ToListAsync(ct);
+        var ids = orders.Select(o => o.Id).ToArray();
+        var rows = await context.OrderItems.AsNoTracking().Where(x => ids.Contains(x.OrderId))
+            .OrderBy(x => x.Id).ToListAsync(ct);
+        return orders.Select(o => ToResponse(o, rows.Where(r => r.OrderId == o.Id))).ToList();
+    }
+
+    public async Task<OrderResponse?> GetOrderAsync(int id, CancellationToken ct = default)
+    {
+        var order = await context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id, ct);
+        if (order is null) return null;
+        var rows = await context.OrderItems.AsNoTracking().Where(x => x.OrderId == id).OrderBy(x => x.Id).ToListAsync(ct);
+        return ToResponse(order, rows);
+    }
+
+    public async Task<List<OrderItemResponse>> GetItemsAsync(int id, CancellationToken ct = default) =>
+        await context.OrderItems.AsNoTracking().Where(x => x.OrderId == id).OrderBy(x => x.Id)
+            .Select(x => new OrderItemResponse { ItemId = x.ItemId, Amount = x.Amount }).ToListAsync(ct);
+
+    public async Task AddOrderAsync(OrderWriteRequest request, CancellationToken ct = default)
+    {
+        await using var tx = await context.Database.BeginTransactionAsync(ct);
+        var now = DateTimeOffset.UtcNow;
+        var order = new Order { Id = request.Id, CreatedAt = now, UpdatedAt = now };
+        ApplyFields(order, request);
+        context.Orders.Add(order);
+        await context.SaveChangesAsync(ct);
+        // Python add_order stores items but doesng update inventory allocations.
+        await SetItemsAsync(order.Id, request.Items ?? [], ct);
+        await tx.CommitAsync(ct);
+    }
+
+    public async Task UpdateOrderAsync(int id, OrderWriteRequest request, CancellationToken ct = default)
+    {
+        await using var tx = await context.Database.BeginTransactionAsync(ct);
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == id, ct);
+        if (order is not null)
+        {
+            ApplyFields(order, request);
+            order.UpdatedAt = DateTimeOffset.UtcNow;
+            await context.SaveChangesAsync(ct);
+        }
+        //Python invokes update_items_in_order even for unknown order ids.
+        if (request.Items is not null)
+            await ReplaceItemsCoreAsync(id, request.Items, ct);
+        await tx.CommitAsync(ct);
+    }
