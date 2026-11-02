@@ -20,3 +20,9 @@ PASS: Bestaande classificatieverifier: 71 van 71 controles, echte HTTP en Postgr
 PASS: git diff --check.
 
 Geen deployment uitgevoerd. Authenticatie en bestaande API-logica zijn niet aangepast.
+
+Aanvulling auteursvermelding:
+PASS: Acht Swagger-groepen bevatten de auteur en een toelichting.
+PASS: Alle 43 acties hebben de juiste vermelding: 15 Jeffrey Doornbos, 28 Artur.
+PASS: De drie classificatie-/items-routes vermelden Artur binnen Jeffreys classificatiegroepen.
+PASS: Build zonder fouten of waarschuwingen; git diff --check.

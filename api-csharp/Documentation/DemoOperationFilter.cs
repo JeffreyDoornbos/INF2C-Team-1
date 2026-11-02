@@ -6,7 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace CargoHub.Api.Documentation;
 
 // Keep presentation examples separate from controllers and database behavior.
-public sealed class DemoOperationFilter : IOperationFilter
+public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
 {
     private static readonly Dictionary<string, (string Label, Type Model)> Resources = new()
     {
@@ -23,7 +23,22 @@ public sealed class DemoOperationFilter : IOperationFilter
     public static string TagFor(string path)
     {
         var resource = path.Split('/').ElementAtOrDefault(2) ?? path;
-        return Resources.TryGetValue(resource, out var entry) ? entry.Label : resource;
+        return Resources.TryGetValue(resource, out var entry)
+            ? $"{entry.Label} - {(IsClassification(resource) ? "Jeffrey" : "Artur")}" : resource;
+    }
+
+    private static bool IsClassification(string resource) => resource is "item_groups" or "item_lines" or "item_types";
+
+    public void Apply(OpenApiDocument document, DocumentFilterContext context)
+    {
+        foreach (var resource in Resources.Keys)
+        {
+            var tag = document.Tags?.OfType<OpenApiTag>().SingleOrDefault(tag => tag.Name == TagFor("api/v1/" + resource));
+            if (tag is null) continue;
+            tag.Description = IsClassification(resource)
+                ? "CRUD omgezet door Jeffrey Doornbos. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+                : "Endpoints geïmplementeerd door Artur.";
+        }
     }
 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
@@ -34,7 +49,7 @@ public sealed class DemoOperationFilter : IOperationFilter
         if (resource is null || !Resources.TryGetValue(resource, out var entry)) return;
         var (label, model) = entry;
         var method = context.ApiDescription.HttpMethod!;
-        var classification = resource is "item_groups" or "item_lines" or "item_types";
+        var classification = IsClassification(resource);
         var nested = segments.Length > 4 && resource != "inventories";
         var collection = segments.Length == 3;
         var obsoleteInventory = resource == "inventories" && segments.Length == 4;
@@ -53,7 +68,9 @@ public sealed class DemoOperationFilter : IOperationFilter
             _ when collection => "lijst ophalen",
             _ => "één record ophalen"
         });
-        operation.Description = "Voorbeelden zijn fictief en gebruiken snake_case-veldnamen. ";
+        var author = context.MethodInfo.DeclaringType?.Name is "ItemGroupsController" or "ItemLinesController" or "ItemTypesController"
+            ? "Jeffrey Doornbos" : "Artur";
+        operation.Description = $"**Gemaakt door: {author}.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ";
         operation.Responses = new OpenApiResponses();
 
         foreach (var parameter in (operation.Parameters ?? []).OfType<OpenApiParameter>())

@@ -33,6 +33,7 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.TagActionsBy(description => [DemoOperationFilter.TagFor(description.RelativePath!)]);
     options.OperationFilter<DemoOperationFilter>();
+    options.DocumentFilter<DemoOperationFilter>();
 });
 
 var app = builder.Build();

@@ -86,3 +86,7 @@ Gebruik een aparte demodatabase. Controleer eerst met GET dat ID **900001** nog 
 Voorbeelden voor magazijnen, locaties, artikelen en voorraad staan er ook in. Maak bij een gekoppelde demo eerst de bovenliggende records aan: magazijn, locatie, artikel en daarna voorraad. Het locatievoorbeeld verwijst standaard naar magazijn **1**; pas dit aan naar **900001** als je het demomagazijn gebruikt. Het artikelvoorbeeld verwijst naar bestaande classificaties en leverancier **1**; kies IDs uit jullie eigen database. Het voorraadvoorbeeld gebruikt demoartikel en demolocatie **900001**. Verwijder na afloop eerst voorraad, daarna artikel en locatie, en als laatste magazijn. `commodity_code` moet in de huidige C#-API als tekst worden verstuurd.
 
 De documentatie toont ook de bestaande beperkingen: enkele databasefouten geven nu nog **500**. Swagger verandert deze afhandeling en de API-logica niet.
+
+### Wie heeft welk onderdeel gemaakt?
+
+De Swagger-groepen vermelden de auteur op basis van de controllercommits. Magazijnen, locaties, artikelen, voorraad en de leveranciers-artikelroute zijn van Artur. De CRUD voor artikelgroepen, artikellijnen en artikeltypen is van Jeffrey Doornbos. De gekoppelde `GET /{id}/items`-routes binnen deze drie classificatiegroepen zijn van Artur. Elk endpoint vermeldt daarom ook afzonderlijk **Gemaakt door**. Andere teamleden worden toegevoegd zodra hun endpoints in deze codebase staan.
