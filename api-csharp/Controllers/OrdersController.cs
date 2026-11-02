@@ -152,3 +152,90 @@ public sealed class OrderService(CargoHubDbContext context)
             await ReplaceItemsCoreAsync(id, request.Items, ct);
         await tx.CommitAsync(ct);
     }
+
+    public async Task ReplaceItemsAsync(int id, IReadOnlyList<OrderItemWriteRequest> items, CancellationToken ct = default)
+    {
+        await using var tx = await context.Database.BeginTransactionAsync(ct);
+        await ReplaceItemsCoreAsync(id, items, ct);
+        await tx.CommitAsync(ct);
+    }
+
+    private async Task ReplaceItemsCoreAsync(int id, IReadOnlyList<OrderItemWriteRequest> items, CancellationToken ct)
+    {
+        var current = await context.OrderItems.Where(x => x.OrderId == id).ToListAsync(ct);
+        var oldAmounts = current.GroupBy(x => x.ItemId).ToDictionary(g => g.Key, g => g.Last().Amount);
+        var newAmounts = items.GroupBy(x => x.ItemId).ToDictionary(g => g.Key, g => g.Last().Amount);
+        foreach (var (itemId, newAmount) in newAmounts)
+        {
+            var delta = newAmount - oldAmounts.GetValueOrDefault(itemId);
+            if (delta != 0) await ApplyAllocationDeltaAsync(itemId, delta, ct);
+        }
+        foreach (var (itemId, oldAmount) in oldAmounts)
+            if (!newAmounts.ContainsKey(itemId))
+                await ApplyAllocationDeltaAsync(itemId, -oldAmount, ct);
+        await SetItemsAsync(id, items, ct);
+    }
+
+    private async Task ApplyAllocationDeltaAsync(int itemId, int delta, CancellationToken ct)
+    {
+        var inventory = await context.Inventories.Where(x => x.ItemId == itemId)
+            .OrderByDescending(x => x.QuantityOnHand).ThenBy(x => x.LocationId)
+            .FirstOrDefaultAsync(ct);
+        if (inventory is null) return;
+        inventory.QuantityAllocated = Math.Max(0, inventory.QuantityAllocated + delta);
+        inventory.UpdatedAt = DateTimeOffset.UtcNow;
+        await context.SaveChangesAsync(ct);
+        // PostgreSQL CHECK quantity_allocated <= quantity_on_hand may reject Python valid overallocations.
+    }
+
+    private async Task SetItemsAsync(int orderId, IReadOnlyList<OrderItemWriteRequest> items, CancellationToken ct)
+    {
+        var previous = await context.OrderItems.Where(x => x.OrderId == orderId).ToListAsync(ct);
+        context.OrderItems.RemoveRange(previous);
+        await context.SaveChangesAsync(ct);
+        foreach (var item in items)
+            context.OrderItems.Add(new OrderItem
+            {
+                OrderId = orderId, ItemId = item.ItemId, Amount = item.Amount,
+                UnitPrice = item.UnitPrice ?? 0m
+            });
+        await context.SaveChangesAsync(ct);
+    }
+
+    public async Task RemoveOrderAsync(int id, CancellationToken ct = default)
+    {
+        await using var tx = await context.Database.BeginTransactionAsync(ct);
+        var items = await context.OrderItems.Where(x => x.OrderId == id).ToListAsync(ct);
+        context.OrderItems.RemoveRange(items);
+        await context.SaveChangesAsync(ct);
+        var order = await context.Orders.FirstOrDefaultAsync(x => x.Id == id, ct);
+        if (order is not null) context.Orders.Remove(order);
+        await context.SaveChangesAsync(ct);
+        await tx.CommitAsync(ct);
+        // FK restrictions can prevent deletion when shipments refer to the order.
+    }
+
+    private static void ApplyFields(Order order, OrderWriteRequest x)
+    {
+        order.ClientId = x.ClientId;
+        order.OrderDate = x.OrderDate;
+        order.RequestDate = x.RequestDate;
+        order.Reference = x.Reference;
+        order.CustomerPoNumber = x.CustomerPoNumber;
+        order.OrderStatus = x.OrderStatus;
+        order.ShippingNotes = x.ShippingNotes;
+        order.WarehouseId = x.WarehouseId;
+        order.ShipToClientId = x.ShipToClientId;
+        order.BillToClientId = x.BillToClientId;
+    }
+
+    private static OrderResponse ToResponse(Order o, IEnumerable<OrderItem> rows) => new()
+    {
+        Id = o.Id, ClientId = o.ClientId, OrderDate = o.OrderDate, RequestDate = o.RequestDate,
+        Reference = o.Reference, CustomerPoNumber = o.CustomerPoNumber, OrderStatus = o.OrderStatus,
+        ShippingNotes = o.ShippingNotes, WarehouseId = o.WarehouseId,
+        ShipToClientId = o.ShipToClientId, BillToClientId = o.BillToClientId,
+        CreatedAt = o.CreatedAt, UpdatedAt = o.UpdatedAt,
+        Items = rows.Select(r => new OrderItemResponse { ItemId = r.ItemId, Amount = r.Amount }).ToList()
+    };
+}
