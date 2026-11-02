@@ -1,6 +1,6 @@
 # CargoHub C# API
 
-ASP.NET Core (.NET 10) met EF Core en Npgsql voor PostgreSQL. De databasebasis is toegevoegd in CH-012. Er zijn nog geen controllers: een HTTP-aanvraag geeft voorlopig 404.
+ASP.NET Core (.NET 10) met EF Core en Npgsql voor PostgreSQL. De databasebasis is toegevoegd in CH-012. De API bevat controllers voor warehouses, locations, items, inventories en de artikelclassificaties item_groups, item_lines en item_types.
 
 ## Starten en migreren
 
@@ -50,3 +50,13 @@ docker compose -f compose.schema-tests.yml down
 De verifier maakt een unieke lege database en verwijdert die na de test. Hij controleert migraties, sleutels, relaties, statuswaarden en constraints met echte PostgreSQL-opdrachten. De testcontainer heeft geen permanent volume: hij bevat alleen wegwerpgegevens.
 
 Zie [CH-012: schema, besluiten en verificatie](../documentatie/CH-012-schema.md) en het [ERD](../documentatie/diagrammen/database_erd_efcore.md). De goedgekeurde schemaregels en de nog te bouwen procesregels staan expliciet in dat document.
+
+## Artikelclassificaties controleren
+
+Met dezelfde aparte PostgreSQL-testinstantie en `CARGOHUB_TEST_ADMIN_CONNECTION`:
+
+```sh
+dotnet run --project tests/CargoHub.ClassificationChecks
+```
+
+Deze verifier maakt een eigen tijdelijke database, past de bestaande migraties toe en start de echte API. Hij controleert de classificatie-CRUD, snake_case-JSON, blijvende opslag na API-herstarts en de aansluiting op de bestaande controllers en filters. De database en API-processen worden na afloop opgeruimd. Er zijn geen extra NuGet-testpakketten nodig. Zie [CH-029: routes en testresultaten](../documentatie/CH-029-item-classifications.md).
