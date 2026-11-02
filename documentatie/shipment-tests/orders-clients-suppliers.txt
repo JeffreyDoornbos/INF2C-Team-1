@@ -1,0 +1,42 @@
+  Determining projects to restore...
+  Restored /Users/anmolharibhajan/Documents/ChatGPT/Software Construction/CargoHub-Shipments/tests/CargoHub.Api.Tests/CargoHub.Api.Tests.csproj (in 3,12 sec).
+  1 of 2 projects are up-to-date for restore.
+  CargoHub.Api -> /Users/anmolharibhajan/Documents/ChatGPT/Software Construction/CargoHub-Shipments/api-csharp/bin/Debug/net10.0/CargoHub.Api.dll
+  CargoHub.Api.Tests -> /Users/anmolharibhajan/Documents/ChatGPT/Software Construction/CargoHub-Shipments/tests/CargoHub.Api.Tests/bin/Debug/net10.0/CargoHub.Api.Tests.dll
+Test run for /Users/anmolharibhajan/Documents/ChatGPT/Software Construction/CargoHub-Shipments/tests/CargoHub.Api.Tests/bin/Debug/net10.0/CargoHub.Api.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.13)
+[xUnit.net 00:00:00.08]   Discovering: CargoHub.Api.Tests
+[xUnit.net 00:00:00.13]   Discovered:  CargoHub.Api.Tests
+[xUnit.net 00:00:00.16]   Starting:    CargoHub.Api.Tests
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetOrder_IncludesItemsButNotUnitPrice [602 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_Put_UpdatesRecord [602 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_GetAll_EmptyDatabase_ReturnsEmptyList [34 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetOrdersForClient_MatchesAllThreeClientFields(clientId: 30) [51 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_PutUnknownId_Returns200WithoutCreatingRecord [22 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetOrdersForClient_MatchesAllThreeClientFields(clientId: 10) [12 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetOrdersForClient_MatchesAllThreeClientFields(clientId: 20) [< 1 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_GetUnknownId_Returns200WithNull [7 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_GetAll_EmptyDatabase_ReturnsEmptyList [6 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_Post_CreatesRecordAndReturns201 [31 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_DeleteUnknownId_Returns200 [1 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_DeleteUnknownId_Returns200 [1 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_Delete_RemovesRecord [12 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_GetUnknownId_Returns200WithNull [6 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_Post_CreatesRecordAndReturns201 [5 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_GetById_ReturnsExistingSupplier [2 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_Delete_RemovesRecord [1 ms]
+[xUnit.net 00:00:00.98]   Finished:    CargoHub.Api.Tests
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Suppliers_Put_UpdatesRecord [1 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_GetById_ReturnsExistingClient [< 1 ms]
+  Passed CargoHub.Api.Tests.ClientsSuppliersTests.Clients_PutUnknownId_Returns200WithoutCreatingRecord [< 1 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.ReplaceItems_IncreasesAllocationOnLocationWithMostStock [79 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.ReplaceItems_RemovingItem_ClampsAllocationToZero [7 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.RemoveOrder_RemovesItemsWithoutReversingAllocation [15 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetItems_UnknownOrder_ReturnsEmptyList [14 ms]
+  Passed CargoHub.Api.Tests.OrdersMigrationTests.GetOrder_UnknownId_ReturnsNull [1 ms]
+
+Test Run Successful.
+Total tests: 25
+     Passed: 25
+ Total time: 1,6093 Seconds

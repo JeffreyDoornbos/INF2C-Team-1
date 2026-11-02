@@ -22,7 +22,9 @@ ENTITIES = [
     ("shipment_item", "ShipmentItem"), ("transfer", "Transfer"),
     ("transfer_item", "TransferItem"),
 ]
-MIGRATIONS = ["20261015111621_InitialBaseline", "20261015113203_EnforceApprovedPilotRules"]
+# Follow the authoritative migrations, including shipment timestamp preservation.
+MIGRATIONS = sorted(p.stem for p in (ROOT / "api-csharp" / "Migrations").glob("[0-9]*_*.cs")
+                    if not p.name.endswith(".Designer.cs"))
 
 
 def quoted(value):
@@ -146,7 +148,7 @@ def main():
         "-- Execute with psql against your chosen database. No database is created or switched.",
         "-- Does not delete/update existing records. All 15 target tables must be empty.",
         "-- user.json is excluded: API key management is outside the EF Core model.",
-        "-- DateOnly fields use the source UTC date; the time of day is discarded.",
+        "-- Order DateOnly fields use UTC dates; shipment timestamps retain their instant.",
         r"\set ON_ERROR_STOP on", r"\encoding UTF8", "BEGIN;",
         "SET LOCAL TIME ZONE 'UTC';", "SET LOCAL standard_conforming_strings = on;",
         "SET LOCAL lock_timeout = '10s';", "",
@@ -197,7 +199,7 @@ def main():
         "conversions": {
             "order.order_date": "UTC calendar date only, following DateOnly",
             "order.request_date": "UTC calendar date only, following DateOnly",
-            "shipment.shipment_date": "UTC calendar date only, following DateOnly",
+            "shipment.shipment_date": "UTC timestamp, retaining the instant",
             "item.commodity_code": "JSON integer converted to text",
             "created_at/updated_at": "UTC timestamp, retaining the instant",
         },

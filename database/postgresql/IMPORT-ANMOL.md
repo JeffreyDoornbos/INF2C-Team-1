@@ -15,7 +15,7 @@ psql -h localhost -p 5432 -U postgres -d cargohub -f database/postgresql/import-
 
 Voer dit uit vanuit de hoofdmap van de repository. Beide opdrachten moeten naar dezelfde server en database verwijzen. `psql` kan om het databasewachtwoord vragen. Gebruik `psql` voor het importbestand: het bevat psql-opdrachten en `COPY FROM stdin`, die niet in iedere grafische SQL-editor werken.
 
-Het importscript maakt geen database of tabellen aan. De twee EF Core-migraties moeten eerst zijn uitgevoerd. Het script controleert dit voordat het data invoegt. Migraties worden niet automatisch uitgevoerd bij het starten van de API.
+Het importscript maakt geen database of tabellen aan. Alle actuele EF Core-migraties moeten eerst zijn uitgevoerd. Het script controleert dit voordat het data invoegt. Migraties worden niet automatisch uitgevoerd bij het starten van de API.
 
 ## Werking
 
@@ -26,7 +26,7 @@ Het importscript maakt geen database of tabellen aan. De twee EF Core-migraties 
 
 ## Omzettingen naar het model
 
-- `order_date`, `request_date` en `shipment_date` zijn `DateOnly`/`date` in Anmols model. De import gebruikt de UTC-datum uit de bron. De tijd binnen die dag wordt niet in deze datumkolommen opgeslagen; de originele waarden blijven in de JSON-bronbestanden staan.
+- `order_date` en `request_date` blijven `DateOnly`/`date` en gebruiken de UTC-datum. Sinds de Sprint 3-shipmentmigratie is `shipment_date` een volledig UTC-tijdstip. **Genereer dit SQL-importbestand opnieuw met `python3 database/postgresql/generate_legacy_import.py` na de schemawijziging en vóór een nieuwe beginimport.** Het bestaande gegenereerde SQL-bestand is historisch en bevat nog ingekorte shipmentdatums. De gecontroleerde CH-013-import leest de actuele entity rechtstreeks.
 - `created_at` en `updated_at` behouden het oorspronkelijke tijdstip en worden als UTC-timestamps ingevoerd.
 - `item.commodity_code` is tekst in het C#-model en wordt daarom vanuit het JSON-getal naar tekst omgezet.
 - `unit_price` gebruikt numeric(18,4) en `unit_weight` numeric(18,6). De generator weigert waarden die buiten dit bereik vallen of afgerond zouden worden.

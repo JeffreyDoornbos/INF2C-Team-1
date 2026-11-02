@@ -1,5 +1,6 @@
 using System.Text.Json;
 using CargoHub.Api.Data;
+using CargoHub.Api.Services;
 using CargoHub.Api.Documentation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -18,6 +19,9 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<CargoHubDbContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("CargoHub")
     ?? throw new InvalidOperationException("Configure ConnectionStrings__CargoHub.")));
+
+builder.Services.AddScoped<ShipmentItemStore>();
+builder.Services.AddScoped<ShipmentService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

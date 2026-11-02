@@ -549,8 +549,8 @@ namespace CargoHub.Api.Migrations
                         .HasColumnType("text")
                         .HasColumnName("reference");
 
-                    b.Property<DateOnly>("ShipmentDate")
-                        .HasColumnType("date")
+                    b.Property<DateTimeOffset>("ShipmentDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("shipment_date");
 
                     b.Property<string>("ShipmentStatus")
