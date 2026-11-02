@@ -56,3 +56,20 @@ public sealed class OrderItemWriteRequest
     [JsonPropertyName("amount")] public int Amount { get; set; }
     [JsonPropertyName("unit_price")] public decimal? UnitPrice { get; set; }
 }
+
+public sealed class OrderWriteRequest
+{
+    [JsonPropertyName("id")] public int Id { get; set; }
+    [JsonPropertyName("client_id")] public int ClientId { get; set; }
+    [JsonPropertyName("order_date")] public DateOnly OrderDate { get; set; }
+    [JsonPropertyName("request_date")] public DateOnly RequestDate { get; set; }
+    [JsonPropertyName("reference")] public string Reference { get; set; } = "";
+    [JsonPropertyName("customer_po_number")] public string CustomerPoNumber { get; set; } = "";
+    [JsonPropertyName("order_status")] public string OrderStatus { get; set; } = "";
+    [JsonPropertyName("shipping_notes")] public string? ShippingNotes { get; set; }
+    [JsonPropertyName("warehouse_id")] public int WarehouseId { get; set; }
+    [JsonPropertyName("ship_to_client_id")] public int ShipToClientId { get; set; }
+    [JsonPropertyName("bill_to_client_id")] public int BillToClientId { get; set; }
+    // null: don't touch items during PUT; []: clear all items.
+    [JsonPropertyName("items")] public List<OrderItemWriteRequest>? Items { get; set; }
+}
