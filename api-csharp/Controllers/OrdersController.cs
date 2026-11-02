@@ -26,3 +26,25 @@ public sealed class OrdersController(CargoHubDbContext context) : ControllerBase
     [HttpGet("/api/v1/clients/{id:int}/orders")]
     public async Task<IActionResult> GetOrdersForClient(int id, CancellationToken ct) =>
         Ok(await service.GetOrdersAsync(id, ct));
+
+    [HttpPost]
+    public async Task<IActionResult> AddOrder([FromBody] OrderWriteRequest request, CancellationToken ct)
+    {
+        await service.AddOrderAsync(request, ct);
+        return StatusCode(201);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateOrder(int id, [FromBody] OrderWriteRequest request, CancellationToken ct)
+    {
+        await service.UpdateOrderAsync(id, request, ct);
+        return Ok();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> RemoveOrder(int id, CancellationToken ct)
+    {
+        await service.RemoveOrderAsync(id, ct);
+        return Ok();
+    }
+}
