@@ -1,0 +1,295 @@
+{
+  "files": {
+    "warehouse": {
+      "source": "warehouse.json",
+      "sha256": "5726716ea24b930dd8b9f3c4d8ec226ea193acbca843ac6bd077894aacc868c7",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "client": {
+      "source": "client.json",
+      "sha256": "e186b929e0068f95dcce5298df4c858c449fc2af82ff9f7e633e4062d5c4e4aa",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "supplier": {
+      "source": "supplier.json",
+      "sha256": "522095785727fafb0f43bad153b5a7c34b9e3d2a21e6a07d1ded54c96fe4141c",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_line": {
+      "source": "item_line.json",
+      "sha256": "5974e0ce81b15c24be47a610e4b6e0f38001e304f110a536db9eaffdb9e696f8",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_group": {
+      "source": "item_group.json",
+      "sha256": "5974e0ce81b15c24be47a610e4b6e0f38001e304f110a536db9eaffdb9e696f8",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_type": {
+      "source": "item_type.json",
+      "sha256": "5974e0ce81b15c24be47a610e4b6e0f38001e304f110a536db9eaffdb9e696f8",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "location": {
+      "source": "location.json",
+      "sha256": "d5d5217578dbc38fb2986dc411e7bb301a88c3a85fcb296b6ad3d76b94a39b8b",
+      "read": 2,
+      "accepted": 2,
+      "imported": 2,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item": {
+      "source": "item.json",
+      "sha256": "788e7231638bb20bc9f14613fe250bc4a3d316a2175e7e874cc0b23ecbf52544",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "inventory": {
+      "source": "inventory.json",
+      "sha256": "3f735df53a1e68ce5343ce7be075a00417b2cb55dec949fdb5fad9039aebcd2e",
+      "read": 2,
+      "accepted": 0,
+      "imported": 0,
+      "rejected": 2,
+      "rejections": [
+        {
+          "row": 1,
+          "key": [
+            "1",
+            "1"
+          ],
+          "reasons": [
+            "duplicate_primary_key"
+          ]
+        },
+        {
+          "row": 2,
+          "key": [
+            "1",
+            "1"
+          ],
+          "reasons": [
+            "duplicate_primary_key"
+          ]
+        }
+      ],
+      "conversions_in_read_records": {}
+    },
+    "order": {
+      "source": "order.json",
+      "sha256": "1f9f31df99644fea495c3aea3b6ec5ae4a37767829d3d173e09564f49506736a",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "order_item": {
+      "source": "order_item.json",
+      "sha256": "ee0ba4784a177b79f56a15e21b8b1e3aacb03076e221a6e311badbe03e48e428",
+      "read": 2,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 1,
+      "rejections": [
+        {
+          "row": 2,
+          "key": [
+            "2"
+          ],
+          "reasons": [
+            "missing_or_rejected_reference:item_id->item"
+          ]
+        }
+      ],
+      "conversions_in_read_records": {}
+    },
+    "shipment": {
+      "source": "shipment.json",
+      "sha256": "3560aa0739068d6acada2ecb737792ee49674f8a9aee529db0f655756ba71646",
+      "read": 1,
+      "accepted": 1,
+      "imported": 1,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "shipment_item": {
+      "source": "shipment_item.json",
+      "sha256": "2cf8c497607167c32ffbef48be480495f78a0a661113bd8f56956eea31b7b8b6",
+      "read": 1,
+      "accepted": 0,
+      "imported": 0,
+      "rejected": 1,
+      "rejections": [
+        {
+          "row": 1,
+          "key": [
+            "1"
+          ],
+          "reasons": [
+            "amount_must_be_positive"
+          ]
+        }
+      ],
+      "conversions_in_read_records": {}
+    },
+    "transfer": {
+      "source": "transfer.json",
+      "sha256": "5d822c358189f0fed467b8a20afc49246a6501a21a7a488e6bd32487206e0d8b",
+      "read": 1,
+      "accepted": 0,
+      "imported": 0,
+      "rejected": 1,
+      "rejections": [
+        {
+          "row": 1,
+          "key": [
+            "1"
+          ],
+          "reasons": [
+            "unknown_status:transfer_status"
+          ]
+        }
+      ],
+      "conversions_in_read_records": {}
+    },
+    "transfer_item": {
+      "source": "transfer_item.json",
+      "sha256": "16fd55ad3ffd98e9cce893200d1655962ef7d232c703f0038ccf7ea11782cd1c",
+      "read": 1,
+      "accepted": 0,
+      "imported": 0,
+      "rejected": 1,
+      "rejections": [
+        {
+          "row": 1,
+          "key": [
+            "1"
+          ],
+          "reasons": [
+            "missing_or_rejected_reference:transfer_id->transfer"
+          ]
+        }
+      ],
+      "conversions_in_read_records": {}
+    }
+  },
+  "excluded_files": {
+    "user.json": "API-sleutels en rechten vallen onder CH-020; niet gelezen of geïmporteerd."
+  },
+  "expected_inventory_totals": {
+    "quantity_on_hand": 0,
+    "quantity_expected": 0,
+    "quantity_ordered": 0,
+    "quantity_allocated": 0,
+    "quantity_available": 0
+  },
+  "expected_counts": {
+    "warehouse": 1,
+    "client": 1,
+    "supplier": 1,
+    "item_line": 1,
+    "item_group": 1,
+    "item_type": 1,
+    "location": 2,
+    "item": 1,
+    "inventory": 0,
+    "order": 1,
+    "order_item": 1,
+    "shipment": 1,
+    "shipment_item": 0,
+    "transfer": 0,
+    "transfer_item": 0
+  },
+  "policy_version": 1,
+  "started_utc": "2026-11-02T13:29:27.898578+00:00",
+  "status": "imported",
+  "database": "cargohub_import_test_49c908b9d4dd4e3fa5236404d67cf38f",
+  "restart_policy": "Never upsert or reset; retry in a NEW empty test database.",
+  "model_sha256": {
+    "Warehouse": "6b6daab185210c939c153dc90ad1e2bcf9d511e1743a594221cbc2a24f761d96",
+    "Client": "a7b4ebc3e8537156e786912e8ff3a46baf5c2795c283f9d025b298ef8a57e913",
+    "Supplier": "beb4db49d440a2eb6871be63170de74d6dafb103504e8c76c47c32da73a355cd",
+    "ItemLine": "d249831bbef35ca35f6af6eda7fd0d0001c53251c6bf2488bf79805285fdeb68",
+    "ItemGroup": "1240fc0404b7cf5f5ba2394dcbf81d147ed0edfdf9aa92f8b8abe676ba02631b",
+    "ItemType": "0387a88d7ce63c94e66a69ba611a4f69c76654b69ad7798421a06fee7ae355a5",
+    "Location": "03952bbe483dd312ee37cefbaa566246dc509b97674b11b1feb3b0f3c29ab879",
+    "Item": "e5e4360b27adef34d57acfcbc15acc531c0852c5de56e8e06e3a8adef23ee33b",
+    "Inventory": "5ab426724a2c1ad01ef29e542378789f243f3112e1e42b34eccbf9b89a148f8b",
+    "Order": "c6a206ba73f13b1f2c16f93937ed18881cdceb75276778b6c4a489d46510bbcd",
+    "OrderItem": "81166cc5832a29e9b37177ddf9b762c420d49efd93bb3741bb4a5a421fe871f7",
+    "Shipment": "17a04b4de80fd49a59b4c0b61bb64fe94ed59649dc3e875f0483ae2617e02190",
+    "ShipmentItem": "fcee92a40d66e6ccbcfff5464a83535e96d5400cbac0081bd8328a27e26589c3",
+    "Transfer": "1ec46fc6174d59cb1e460cdf562140a39c7cef46183aa411e4c9f6d97d24cd4d",
+    "TransferItem": "b20bbec81d2bc473ac3a0db426c077e3aac22aa598337ead25bbe830a5c9eb2a"
+  },
+  "database_counts": {
+    "warehouse": 1,
+    "client": 1,
+    "supplier": 1,
+    "item_line": 1,
+    "item_group": 1,
+    "item_type": 1,
+    "location": 2,
+    "item": 1,
+    "inventory": 0,
+    "order": 1,
+    "order_item": 1,
+    "shipment": 1,
+    "shipment_item": 0,
+    "transfer": 0,
+    "transfer_item": 0
+  },
+  "database_inventory_totals": {
+    "quantity_on_hand": 0,
+    "quantity_expected": 0,
+    "quantity_ordered": 0,
+    "quantity_allocated": 0,
+    "quantity_available": 0
+  },
+  "source_hashes_unchanged": true,
+  "summary": {
+    "read": 18,
+    "accepted": 12,
+    "imported": 12,
+    "rejected": 6
+  }
+}

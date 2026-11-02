@@ -1,0 +1,20 @@
+test_all_duplicate_primary_keys_rejected_and_children_reported (test_validation.ValidationTests.test_all_duplicate_primary_keys_rejected_and_children_reported) ... ok
+test_database_and_report_safety_before_any_connection (test_validation.ValidationTests.test_database_and_report_safety_before_any_connection) ... ok
+test_duplicate_composite_inventory_key (test_validation.ValidationTests.test_duplicate_composite_inventory_key) ... ok
+test_duplicate_transfer_item_with_different_id (test_validation.ValidationTests.test_duplicate_transfer_item_with_different_id) ... ok
+test_invalid_json_stops_before_database (test_validation.ValidationTests.test_invalid_json_stops_before_database) ... ok
+test_invalid_status_and_locations (test_validation.ValidationTests.test_invalid_status_and_locations) ... ok
+test_inventory_rules (test_validation.ValidationTests.test_inventory_rules) ... ok
+test_numeric_rounding_is_rejected (test_validation.ValidationTests.test_numeric_rounding_is_rejected) ... ok
+test_orphan_reference (test_validation.ValidationTests.test_orphan_reference) ... ok
+test_timestamps_need_explicit_timezone (test_validation.ValidationTests.test_timestamps_need_explicit_timezone) ... ok
+test_unknown_missing_and_null_fields (test_validation.ValidationTests.test_unknown_missing_and_null_fields) ... ok
+test_utc_date_conversion_and_numeric_commodity (test_validation.ValidationTests.test_utc_date_conversion_and_numeric_commodity) ... ok
+test_valid_relational_fixture (test_validation.ValidationTests.test_valid_relational_fixture) ... ok
+test_validation_report_and_sources_unchanged (test_validation.ValidationTests.test_validation_report_and_sources_unchanged) ... ok
+test_zero_and_negative_amount (test_validation.ValidationTests.test_zero_and_negative_amount) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.172s
+
+OK

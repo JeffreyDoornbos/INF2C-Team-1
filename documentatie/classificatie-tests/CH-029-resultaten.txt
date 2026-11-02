@@ -1,0 +1,72 @@
+PASS 1: Existing migrations and unmodified JSON fixtures loaded; no new migration required
+PASS 2: item_groups: GET list matches all original JSON records and five snake_case fields
+PASS 3: item_groups: GET existing ID preserves values and timestamps
+PASS 4: item_groups: GET missing ID returns 200 with JSON null
+PASS 5: item_groups: Artur's existing /items route returns the matching integer IDs without route ambiguity
+PASS 6: item_groups: unknown /items route returns an empty JSON array
+PASS 7: item_groups: invalid integer route returns 404, consistent with Artur's route constraints
+PASS 8: item_groups: POST returns the original empty 201 response
+PASS 9: item_groups: POST persists all fields with server-generated UTC timestamps
+PASS 10: item_groups: independent PostgreSQL connection confirms persisted POST data
+PASS 11: item_groups: duplicate ID returns 409 and preserves the original record
+PASS 12: item_groups: POST without an ID generates a usable database ID
+PASS 13: item_groups: PUT returns empty 200, updates fields and preserves path ID/created_at
+PASS 14: item_groups: values survive an actual API process restart
+PASS 15: item_groups: PUT missing ID preserves empty 200/no-op behavior
+PASS 16: item_groups: malformed JSON, array, null body and null required field return 400
+PASS 17: item_groups: malformed PUT returns 400 without modifying data
+PASS 18: item_groups: referenced classification returns 409 without losing records or item links
+PASS 19: item_groups: DELETE returns empty 200 and permanently removes unreferenced records
+PASS 20: item_groups: DELETE missing ID remains an empty 200/no-op
+PASS 21: item_groups: unsupported method/subroute return 405/404
+PASS 22: item_groups: complete CRUD cycle preserves the original dataset
+PASS 23: item_lines: GET list matches all original JSON records and five snake_case fields
+PASS 24: item_lines: GET existing ID preserves values and timestamps
+PASS 25: item_lines: GET missing ID returns 200 with JSON null
+PASS 26: item_lines: Artur's existing /items route returns the matching integer IDs without route ambiguity
+PASS 27: item_lines: unknown /items route returns an empty JSON array
+PASS 28: item_lines: invalid integer route returns 404, consistent with Artur's route constraints
+PASS 29: item_lines: POST returns the original empty 201 response
+PASS 30: item_lines: POST persists all fields with server-generated UTC timestamps
+PASS 31: item_lines: independent PostgreSQL connection confirms persisted POST data
+PASS 32: item_lines: duplicate ID returns 409 and preserves the original record
+PASS 33: item_lines: POST without an ID generates a usable database ID
+PASS 34: item_lines: PUT returns empty 200, updates fields and preserves path ID/created_at
+PASS 35: item_lines: values survive an actual API process restart
+PASS 36: item_lines: PUT missing ID preserves empty 200/no-op behavior
+PASS 37: item_lines: malformed JSON, array, null body and null required field return 400
+PASS 38: item_lines: malformed PUT returns 400 without modifying data
+PASS 39: item_lines: referenced classification returns 409 without losing records or item links
+PASS 40: item_lines: DELETE returns empty 200 and permanently removes unreferenced records
+PASS 41: item_lines: DELETE missing ID remains an empty 200/no-op
+PASS 42: item_lines: unsupported method/subroute return 405/404
+PASS 43: item_lines: complete CRUD cycle preserves the original dataset
+PASS 44: item_types: GET list matches all original JSON records and five snake_case fields
+PASS 45: item_types: GET existing ID preserves values and timestamps
+PASS 46: item_types: GET missing ID returns 200 with JSON null
+PASS 47: item_types: Artur's existing /items route returns the matching integer IDs without route ambiguity
+PASS 48: item_types: unknown /items route returns an empty JSON array
+PASS 49: item_types: invalid integer route returns 404, consistent with Artur's route constraints
+PASS 50: item_types: POST returns the original empty 201 response
+PASS 51: item_types: POST persists all fields with server-generated UTC timestamps
+PASS 52: item_types: independent PostgreSQL connection confirms persisted POST data
+PASS 53: item_types: duplicate ID returns 409 and preserves the original record
+PASS 54: item_types: POST without an ID generates a usable database ID
+PASS 55: item_types: PUT returns empty 200, updates fields and preserves path ID/created_at
+PASS 56: item_types: values survive an actual API process restart
+PASS 57: item_types: PUT missing ID preserves empty 200/no-op behavior
+PASS 58: item_types: malformed JSON, array, null body and null required field return 400
+PASS 59: item_types: malformed PUT returns 400 without modifying data
+PASS 60: item_types: referenced classification returns 409 without losing records or item links
+PASS 61: item_types: DELETE returns empty 200 and permanently removes unreferenced records
+PASS 62: item_types: DELETE missing ID remains an empty 200/no-op
+PASS 63: item_types: unsupported method/subroute return 405/404
+PASS 64: item_types: complete CRUD cycle preserves the original dataset
+PASS 65: Artur regression: GET /api/v1/warehouses returns its original fixture count (10)
+PASS 66: Artur regression: GET /api/v1/locations returns its original fixture count (400)
+PASS 67: Artur regression: GET /api/v1/items returns its original fixture count (600)
+PASS 68: Artur regression: GET /api/v1/inventories returns its original fixture count (4800)
+PASS 69: Artur regression: item filter for item_groups still matches source JSON
+PASS 70: Artur regression: item filter for item_lines still matches source JSON
+PASS 71: Artur regression: item filter for item_types still matches source JSON
+PASS: 71 checks, real HTTP + PostgreSQL; temporary database will be removed.
