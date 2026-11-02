@@ -1,0 +1,241 @@
+{
+  "files": {
+    "warehouse": {
+      "source": "warehouse.json",
+      "sha256": "029a21a284438f850218046a10ca053cad79d7f27672ab784bf10dd2702d9a37",
+      "read": 10,
+      "accepted": 10,
+      "imported": 10,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "client": {
+      "source": "client.json",
+      "sha256": "83831a4f3295c8c4f71cbbf7f760810058ce9bfd4c15a2c6c8b4fe1c65ed04a1",
+      "read": 300,
+      "accepted": 300,
+      "imported": 300,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "supplier": {
+      "source": "supplier.json",
+      "sha256": "a6eb3297cace50f6902844dbbeb9e28798c3a13b770f3ac46ec7f55144781b4a",
+      "read": 21,
+      "accepted": 21,
+      "imported": 21,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_line": {
+      "source": "item_line.json",
+      "sha256": "ae19362f2082bc2add924afd0e387816c89903be8f303255c3d8ae606630105b",
+      "read": 14,
+      "accepted": 14,
+      "imported": 14,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_group": {
+      "source": "item_group.json",
+      "sha256": "572fdd2cd78b32f38ee56f6987f0575646c5181a8556b806f1ce803025d6afad",
+      "read": 3,
+      "accepted": 3,
+      "imported": 3,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item_type": {
+      "source": "item_type.json",
+      "sha256": "c017a81dca98916b1154b51063208c51921d58fd14b7efff4b9ed7c248412596",
+      "read": 3,
+      "accepted": 3,
+      "imported": 3,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "location": {
+      "source": "location.json",
+      "sha256": "43536a23da370bb4b67d6e2e35e67182059ee7a41cdfdd4d6d87ed232685aa6d",
+      "read": 400,
+      "accepted": 400,
+      "imported": 400,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "item": {
+      "source": "item.json",
+      "sha256": "118f7a3d10f9f2b5fd55ec28043d856dc5b5eb7af66d2b2958c27d7b19dcbc68",
+      "read": 600,
+      "accepted": 600,
+      "imported": 600,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {
+        "commodity_code: integer -> text": 600
+      }
+    },
+    "inventory": {
+      "source": "inventory.json",
+      "sha256": "5f8bb30b5a6b6ea4d3be0100d04ba78c86206cfbd43c90c0c70df8dea3e16b2c",
+      "read": 4800,
+      "accepted": 4800,
+      "imported": 4800,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "order": {
+      "source": "order.json",
+      "sha256": "9f9c2e7ec7d1dcdc5f0b877f237a14da980fe7dc03be5ff68b4c632d6dfe6e42",
+      "read": 4854,
+      "accepted": 4854,
+      "imported": 4854,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {
+        "order_date: UTC timestamp -> date": 4854,
+        "request_date: UTC timestamp -> date": 4854
+      }
+    },
+    "order_item": {
+      "source": "order_item.json",
+      "sha256": "ae87586de45f9bdcbca39190efa54b7ed97b875c58fcfbb9113b3a72870ed6c6",
+      "read": 26498,
+      "accepted": 26498,
+      "imported": 26498,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "shipment": {
+      "source": "shipment.json",
+      "sha256": "7990d38c4c43e6c19fa51f71cff7df2deeb7fed2ff056daca9c26d055e0916e7",
+      "read": 6132,
+      "accepted": 6132,
+      "imported": 6132,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {
+        "shipment_date: UTC timestamp -> date": 6132
+      }
+    },
+    "shipment_item": {
+      "source": "shipment_item.json",
+      "sha256": "cf0d8f646b229ed4f5f368d000a55321e405bbd3a2007cb89da5d6031e5ec3ed",
+      "read": 33660,
+      "accepted": 33660,
+      "imported": 33660,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "transfer": {
+      "source": "transfer.json",
+      "sha256": "5c8aa50d0c406b81671e96fb9086041abdef2926d5af5cf68b447e0238093727",
+      "read": 800,
+      "accepted": 800,
+      "imported": 800,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    },
+    "transfer_item": {
+      "source": "transfer_item.json",
+      "sha256": "2cba53549817ee8ee5d4ebe92384898013e2f2f2a335a60ec3db389a9cee00f0",
+      "read": 2370,
+      "accepted": 2370,
+      "imported": 2370,
+      "rejected": 0,
+      "rejections": [],
+      "conversions_in_read_records": {}
+    }
+  },
+  "excluded_files": {
+    "user.json": "API-sleutels en rechten vallen onder CH-020; niet gelezen of geïmporteerd."
+  },
+  "expected_inventory_totals": {
+    "quantity_on_hand": 1191191,
+    "quantity_expected": 487761,
+    "quantity_ordered": 355960,
+    "quantity_allocated": 599322,
+    "quantity_available": 591869
+  },
+  "expected_counts": {
+    "warehouse": 10,
+    "client": 300,
+    "supplier": 21,
+    "item_line": 14,
+    "item_group": 3,
+    "item_type": 3,
+    "location": 400,
+    "item": 600,
+    "inventory": 4800,
+    "order": 4854,
+    "order_item": 26498,
+    "shipment": 6132,
+    "shipment_item": 33660,
+    "transfer": 800,
+    "transfer_item": 2370
+  },
+  "policy_version": 1,
+  "started_utc": "2026-11-02T13:29:36.472202+00:00",
+  "status": "imported",
+  "database": "cargohub_import_test_d749d512937049f68217aeca8c9e538b",
+  "restart_policy": "Never upsert or reset; retry in a NEW empty test database.",
+  "model_sha256": {
+    "Warehouse": "6b6daab185210c939c153dc90ad1e2bcf9d511e1743a594221cbc2a24f761d96",
+    "Client": "a7b4ebc3e8537156e786912e8ff3a46baf5c2795c283f9d025b298ef8a57e913",
+    "Supplier": "beb4db49d440a2eb6871be63170de74d6dafb103504e8c76c47c32da73a355cd",
+    "ItemLine": "d249831bbef35ca35f6af6eda7fd0d0001c53251c6bf2488bf79805285fdeb68",
+    "ItemGroup": "1240fc0404b7cf5f5ba2394dcbf81d147ed0edfdf9aa92f8b8abe676ba02631b",
+    "ItemType": "0387a88d7ce63c94e66a69ba611a4f69c76654b69ad7798421a06fee7ae355a5",
+    "Location": "03952bbe483dd312ee37cefbaa566246dc509b97674b11b1feb3b0f3c29ab879",
+    "Item": "e5e4360b27adef34d57acfcbc15acc531c0852c5de56e8e06e3a8adef23ee33b",
+    "Inventory": "5ab426724a2c1ad01ef29e542378789f243f3112e1e42b34eccbf9b89a148f8b",
+    "Order": "c6a206ba73f13b1f2c16f93937ed18881cdceb75276778b6c4a489d46510bbcd",
+    "OrderItem": "81166cc5832a29e9b37177ddf9b762c420d49efd93bb3741bb4a5a421fe871f7",
+    "Shipment": "17a04b4de80fd49a59b4c0b61bb64fe94ed59649dc3e875f0483ae2617e02190",
+    "ShipmentItem": "fcee92a40d66e6ccbcfff5464a83535e96d5400cbac0081bd8328a27e26589c3",
+    "Transfer": "1ec46fc6174d59cb1e460cdf562140a39c7cef46183aa411e4c9f6d97d24cd4d",
+    "TransferItem": "b20bbec81d2bc473ac3a0db426c077e3aac22aa598337ead25bbe830a5c9eb2a"
+  },
+  "database_counts": {
+    "warehouse": 10,
+    "client": 300,
+    "supplier": 21,
+    "item_line": 14,
+    "item_group": 3,
+    "item_type": 3,
+    "location": 400,
+    "item": 600,
+    "inventory": 4800,
+    "order": 4854,
+    "order_item": 26498,
+    "shipment": 6132,
+    "shipment_item": 33660,
+    "transfer": 800,
+    "transfer_item": 2370
+  },
+  "database_inventory_totals": {
+    "quantity_on_hand": 1191191,
+    "quantity_expected": 487761,
+    "quantity_ordered": 355960,
+    "quantity_allocated": 599322,
+    "quantity_available": 591869
+  },
+  "source_hashes_unchanged": true,
+  "summary": {
+    "read": 80465,
+    "accepted": 80465,
+    "imported": 80465,
+    "rejected": 0
+  }
+}

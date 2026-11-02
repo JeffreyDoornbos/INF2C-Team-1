@@ -1,0 +1,75 @@
+PASS: Full relational source copy imported into migrated empty test DB
+PASS: Read = imported + rejected
+PASS: Database counts equal accepted source counts
+PASS: All inventory totals and available stock equal accepted source totals
+PASS: Source hashes unchanged after full import
+PASS: All accepted rows and fields match PostgreSQL: warehouse
+PASS: All accepted rows and fields match PostgreSQL: client
+PASS: All accepted rows and fields match PostgreSQL: supplier
+PASS: All accepted rows and fields match PostgreSQL: item_line
+PASS: All accepted rows and fields match PostgreSQL: item_group
+PASS: All accepted rows and fields match PostgreSQL: item_type
+PASS: All accepted rows and fields match PostgreSQL: location
+PASS: All accepted rows and fields match PostgreSQL: item
+PASS: All accepted rows and fields match PostgreSQL: inventory
+PASS: All accepted rows and fields match PostgreSQL: order
+PASS: All accepted rows and fields match PostgreSQL: order_item
+PASS: All accepted rows and fields match PostgreSQL: shipment
+PASS: All accepted rows and fields match PostgreSQL: shipment_item
+PASS: All accepted rows and fields match PostgreSQL: transfer
+PASS: All accepted rows and fields match PostgreSQL: transfer_item
+PASS: Repeat refused and all existing counts unchanged
+PASS: All accepted rows and fields match PostgreSQL: warehouse
+PASS: All accepted rows and fields match PostgreSQL: client
+PASS: All accepted rows and fields match PostgreSQL: supplier
+PASS: All accepted rows and fields match PostgreSQL: item_line
+PASS: All accepted rows and fields match PostgreSQL: item_group
+PASS: All accepted rows and fields match PostgreSQL: item_type
+PASS: All accepted rows and fields match PostgreSQL: location
+PASS: All accepted rows and fields match PostgreSQL: item
+PASS: All accepted rows and fields match PostgreSQL: inventory
+PASS: All accepted rows and fields match PostgreSQL: order
+PASS: All accepted rows and fields match PostgreSQL: order_item
+PASS: All accepted rows and fields match PostgreSQL: shipment
+PASS: All accepted rows and fields match PostgreSQL: shipment_item
+PASS: All accepted rows and fields match PostgreSQL: transfer
+PASS: All accepted rows and fields match PostgreSQL: transfer_item
+PASS: Next generated ID follows imported IDs: warehouse
+PASS: Next generated ID follows imported IDs: client
+PASS: Next generated ID follows imported IDs: supplier
+PASS: Next generated ID follows imported IDs: item_line
+PASS: Next generated ID follows imported IDs: item_group
+PASS: Next generated ID follows imported IDs: item_type
+PASS: Next generated ID follows imported IDs: location
+PASS: Next generated ID follows imported IDs: item
+PASS: Next generated ID follows imported IDs: order
+PASS: Next generated ID follows imported IDs: order_item
+PASS: Next generated ID follows imported IDs: shipment
+PASS: Next generated ID follows imported IDs: shipment_item
+PASS: Next generated ID follows imported IDs: transfer
+PASS: Next generated ID follows imported IDs: transfer_item
+PASS: Mixed import reports both duplicates, orphan, invalid amount/status and rejected-parent child
+PASS: Mixed report accounts for every record per table
+PASS: Rejected inventory is excluded from source/database reconciliation
+PASS: Every rejected record has an indexed reason
+PASS: All accepted rows and fields match PostgreSQL: warehouse
+PASS: All accepted rows and fields match PostgreSQL: client
+PASS: All accepted rows and fields match PostgreSQL: supplier
+PASS: All accepted rows and fields match PostgreSQL: item_line
+PASS: All accepted rows and fields match PostgreSQL: item_group
+PASS: All accepted rows and fields match PostgreSQL: item_type
+PASS: All accepted rows and fields match PostgreSQL: location
+PASS: All accepted rows and fields match PostgreSQL: item
+PASS: All accepted rows and fields match PostgreSQL: inventory
+PASS: All accepted rows and fields match PostgreSQL: order
+PASS: All accepted rows and fields match PostgreSQL: order_item
+PASS: All accepted rows and fields match PostgreSQL: shipment
+PASS: All accepted rows and fields match PostgreSQL: shipment_item
+PASS: All accepted rows and fields match PostgreSQL: transfer
+PASS: All accepted rows and fields match PostgreSQL: transfer_item
+PASS: Mixed fixture source hashes unchanged
+PASS: Missing EF migrations block all import writes
+PASS: Injected late COPY failure rolls back every table
+PASS: Rollback preserves original sequence states
+PASS: Retry after complete rollback succeeds without reset
+PASS: 74 PostgreSQL checks; 4 temporary databases removed.
