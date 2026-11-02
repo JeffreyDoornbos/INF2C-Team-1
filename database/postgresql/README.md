@@ -1,6 +1,10 @@
 # CargoHub PostgreSQL database
 
-## Actuele import voor Anmols EF Core model
+## CH-013: gecontroleerde proefimport
+
+Gebruik voor de CH-013-acceptatie [import_test_json.py](import_test_json.py), met een lege testdatabase en een verslag van geaccepteerde/afgewezen records. Zie de [CH-013-handleiding en testresultaten](../../documentatie/CH-013-import.md). De bestaande generator en SQL hieronder blijven beschikbaar voor de eerdere strikte beginimport; zij dwingen niet dezelfde testdatabasebeperking af.
+
+## Eerdere strikte import voor Anmols EF Core model
 
 Gebruik **[import-legacy-json.sql](import-legacy-json.sql)** na het uitvoeren van Anmols EF Core-migraties. Dit bestand importeert de oude JSON-data in zijn bestaande `public`-tabellen. Zie **[IMPORT-ANMOL.md](IMPORT-ANMOL.md)** voor de stappen en omzettingen. Dit is de leidende databasebasis voor de C#-API.
 
