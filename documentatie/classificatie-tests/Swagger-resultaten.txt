@@ -1,0 +1,42 @@
+Swagger-verificatie - 2 november 2026
+
+Omgeving: .NET 10.0.401, Swashbuckle.AspNetCore 10.2.3, PostgreSQL 16.14.
+Alle schrijfacties uitgevoerd in een afzonderlijke tijdelijke database.
+
+PASS: API-build, 0 waarschuwingen en 0 fouten.
+PASS: OpenAPI JSON bevat 43 huidige methode-padcombinaties op 22 paden.
+PASS: Alle acties hebben een Nederlandse samenvatting, uitleg en responses.
+PASS: Iedere POST en PUT heeft een ingevuld JSON-requestvoorbeeld.
+PASS: Acht Nederlandse resourcegroepen, zonder lege controllergroepen.
+PASS: Gegenereerde classificatieschema's gebruiken de vijf snake_case-velden.
+PASS: Swagger UI geladen in browser; Try it out en Execute op de voorbeeld-POST geven 201.
+PASS: Het via Swagger aangemaakte record is via HTTP opgehaald en gewijzigd met het PUT-voorbeeld.
+PASS: Opnieuw aanmaken met hetzelfde ID geeft 409; verwijderen geeft 200; daaropvolgende GET geeft 200 met null.
+PASS: ProblemDetails-voorbeelden hebben een passende status en application/problem+json.
+PASS: Development biedt Swagger standaard aan (200).
+PASS: Production biedt Swagger standaard niet aan (404).
+PASS: Production met Swagger__Enabled=true biedt document en UI aan (200).
+PASS: Bestaande classificatieverifier: 71 van 71 controles, echte HTTP en PostgreSQL.
+PASS: git diff --check.
+
+Geen deployment uitgevoerd. Authenticatie en bestaande API-logica zijn niet aangepast.
+
+Aanvulling auteursvermelding:
+PASS: Acht Swagger-groepen bevatten de auteur en een toelichting.
+PASS: Alle 43 acties hebben de juiste vermelding: 15 Jeffrey Doornbos, 28 Artur.
+PASS: De drie classificatie-/items-routes vermelden Artur binnen Jeffreys classificatiegroepen.
+PASS: Build zonder fouten of waarschuwingen; git diff --check.
+
+Aanvulling lokale databaseconfiguratie:
+Oorzaak van Configure ConnectionStrings__CargoHub: de door de gebruiker gestarte API had geen verbinding ingesteld.
+Een aparte lokale cargohub_demo-database is aangemaakt met de bestaande migraties en legacy-import.
+De lokale verbinding staat buiten Git in .NET User Secrets. De migratiefactory leest die nu ook; omgevingsvariabelen hebben voorrang.
+PASS: EF database update zonder verbindingsvariabele gebruikt de lokaal opgeslagen verbinding; schema is actueel.
+PASS: Alle 22 GET-acties via localhost:5268 getest met geïmporteerde data; de oude voorraad-ID-route geeft zoals gedocumenteerd 404.
+PASS: Alle zeven POST- en zeven PUT-voorbeelden getest; gekoppelde IDs aangepast naar eigen demorecords.
+PASS: Alle zeven DELETE-acties getest; uitsluitend de eigen demorecords opgeruimd.
+PASS: Drie dubbele classificatie-IDs geven 409; ongeldig artikelfilter en numerieke commodity_code geven 400.
+PASS: In totaal alle 43 gedocumenteerde acties gecontroleerd met 55 assertions.
+PASS: Na opruimen staan er nog precies de 80.465 geïmporteerde zakelijke records.
+PASS: Swagger UI en warehouses geven HTTP 200 op localhost:5268.
+De lokale API blijft gestart voor de gebruiker. Geen deployment naar Ubuntu uitgevoerd.
