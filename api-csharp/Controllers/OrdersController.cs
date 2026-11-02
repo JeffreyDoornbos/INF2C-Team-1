@@ -22,3 +22,7 @@ public sealed class OrdersController(CargoHubDbContext context) : ControllerBase
         var order = await service.GetOrderAsync(id, ct);
         return new JsonResult(order) { StatusCode = 200 };
     }
+
+    [HttpGet("/api/v1/clients/{id:int}/orders")]
+    public async Task<IActionResult> GetOrdersForClient(int id, CancellationToken ct) =>
+        Ok(await service.GetOrdersAsync(id, ct));
