@@ -1,0 +1,57 @@
+BEGIN
+SET
+SET
+SET
+DO
+LOCK TABLE
+DO
+COPY 10
+COPY 300
+COPY 21
+COPY 14
+COPY 3
+COPY 3
+COPY 400
+COPY 600
+COPY 4800
+COPY 4854
+COPY 26498
+COPY 6132
+COPY 33660
+COPY 800
+COPY 2370
+DO
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+  table_name   | records 
+---------------+---------
+ client        |     300
+ inventory     |    4800
+ item          |     600
+ item_group    |       3
+ item_line     |      14
+ item_type     |       3
+ location      |     400
+ order         |    4854
+ order_item    |   26498
+ shipment      |    6132
+ shipment_item |   33660
+ supplier      |      21
+ transfer      |     800
+ transfer_item |    2370
+ warehouse     |      10
+(15 rows)
+
