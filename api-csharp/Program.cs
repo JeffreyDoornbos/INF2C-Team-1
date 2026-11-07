@@ -22,6 +22,8 @@ builder.Services.AddDbContext<CargoHubDbContext>(options => options.UseNpgsql(
 
 builder.Services.AddScoped<ShipmentItemStore>();
 builder.Services.AddScoped<ShipmentService>();
+builder.Services.AddScoped<TransferItemStore>();
+builder.Services.AddScoped<TransferService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

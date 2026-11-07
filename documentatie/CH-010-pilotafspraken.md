@@ -146,10 +146,12 @@ CH-012 bevat primary keys, foreign keys, RESTRICT en controles op hoeveelheden/s
 
 ## Bronnen en herleidbaarheid
 
-Gelezen op 15 oktober 2026, op basis van lokale repositorycommit `74bdb14b34cadba213dcf550477a6de2c7596fdc` en de eerder aangeleverde documenten:
-
 - CH-001: [API-handler](../api/main.py), [dataprovider](../api/providers/data_provider.py), [endpointonderzoek](onderzoek-tests/README.md).
 - CH-002: [bestaand ERD](diagrammen/database_erd.png), [voorraadmodel](../api/models/inventories.py), [shipmentmodel](../api/models/shipments.py).
 - CH-008: transfercommit in de API-handler, [transfermodel](../api/models/transfers.py), [onderzoeksresultaten](onderzoek-tests/resultaten.json).
 - CH-009: `Onderzoeksrapport-CargoHub.docx`, hoofdstukken over technische basis, pilot, migratie en herstel; klantpresentatie van 30 september en feedback over PostgreSQL/Docker.
 - [CH-012-uitwerking](CH-012-schema.md) en [nieuw ERD](diagrammen/database_erd_efcore.md): huidige implementatie, geen vervanging van PO-besluiten.
+
+## Implementatie-update — 7 november 2026
+
+De transferregels voor beschikbare voorraad, eenmalige commit, Processed-historie en atomiciteit zijn geïmplementeerd in de [Sprint 2-transfermigratie](Sprint-2-transfers.md). De normale Python-berekening en responses zijn vergeleken; veilige verwerking en foutgevallen zijn afzonderlijk getest. Dit vult geen ontbrekende capaciteit, prestatie-/herstelgrenzen of pilot-go/no-go in.

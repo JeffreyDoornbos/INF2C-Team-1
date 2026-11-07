@@ -1,0 +1,32 @@
+PASS: Timestamp migration preserves existing dates as UTC midnight even in another session time zone
+PASS: Initial Python read responses and stock — HTTP responses and independent PostgreSQL stock match Python models
+PASS: POST stores lines without an ordered-stock delta — HTTP responses and independent PostgreSQL stock match Python models
+PASS: PUT items applies increases, removals, clamping and skips missing inventory — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Identical PUT is idempotent for ordered-stock deltas — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Duplicate item lines retain Python last-value delta behavior — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Empty items removes all lines with the existing negative delta — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Full PUT updates header and items in one operation — HTTP responses and independent PostgreSQL stock match Python models
+PASS: PUT without items preserves existing shipment lines — HTTP responses and independent PostgreSQL stock match Python models
+PASS: PUT with null items preserves existing shipment lines — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Order lists keep the first ID for legacy v1 compatibility — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Empty order list clears the nullable link — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Delete removes header and lines without reversing ordered stock — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Data survives actual API process restart — HTTP responses and independent PostgreSQL stock match Python models
+PASS: Missing GET detail/items/orders preserve 200/null/[] responses
+PASS: Missing header PUT/order PUT/DELETE preserve legacy 200 no-op behavior
+PASS: Unknown shipment cannot acquire orphan item rows
+PASS: Malformed, null, wrong-shape, invalid-amount, unknown-item and null-line requests return 400
+PASS: First order ID is validated and used; later IDs are ignored as in Python
+PASS: Invalid status/order and duplicate shipment ID preserve existing data and return 400/409
+PASS: POST generates usable IDs, normalizes offset timestamps and creates server timestamps
+PASS: Explicit offsets are required for timestamps; date-only requests remain accepted as UTC midnight
+PASS: Different shipments updating the same inventory keep both ordered-stock deltas
+PASS: Concurrent replacements of the same shipment serialize without duplicate lines or lost updates
+PASS: Injected late database error rolls back shipment header, replacement lines and ordered inventory together
+PASS: PUT retains path ID and original creation time even with a mismatching body ID
+PASS: All shipment route families are present in the real generated OpenAPI document
+PASS: Unsupported method and unknown subroute return 405/404
+PASS: Rollback refuses to discard newly stored shipment times and preserves migration history
+PASS: Deleting all shipments leaves an empty array, removes their item rows and preserves ordered inventory
+PASS: Deleted shipment headers and lines stay deleted after API restart
+PASS: 31 shipment acceptance checks.
