@@ -119,7 +119,7 @@ erDiagram
         int order_id FK
         text payment_type
         text reference
-        date shipment_date
+        timestamptz shipment_date
         text shipment_status
         text shipment_type
         text shipping_method
@@ -209,3 +209,5 @@ Alle kolommen zijn verplicht behalve `order.shipping_notes` en `shipment.order_i
 - Enkelvoudige `id`-kolommen: PostgreSQL identity by default.
 - `created_at` en `updated_at`: `CURRENT_TIMESTAMP` bij invoegen; updates wijzigen `updated_at` niet automatisch.
 - `transfer_status`: `Scheduled`.
+
+De schemaregels volgen het gebruikersakkoord op CH-010 van 15 oktober 2026. Statusovergangen, onveranderlijke verwerkte transfers en transactieveilige commitverwerking worden in CH-015 geïmplementeerd. De bestaande resources, inclusief klanten, orders en zendingen, zijn opgenomen. API-sleutelbeheer blijft bij CH-020; geheimen worden niet door deze migratie geïmporteerd.

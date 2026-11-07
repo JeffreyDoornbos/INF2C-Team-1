@@ -14,7 +14,7 @@ Het model bevat de vijftien bestaande zakelijke resources: warehouse, location, 
 - Orders verwijzen naar een magazijn en naar de klant, afleverklant en factuurklant. Order- en zendingsregels verwijzen naar hun ouderrecord en artikel.
 - Een shipment heeft nul of één order. Eén order kan meerdere shipments hebben. Dit volgt de opslag en het ERD; de opmerking `1:1` in de oude Python-code is geen afgedwongen unieke relatie. De bestaande v1-lijstweergave kan de API later blijven aanbieden.
 - ID-kolommen gebruiken identity by default. De latere JSON-import moet na expliciete IDs de sequences bijwerken; anders kan een volgende automatisch gegenereerde ID botsen.
-- `shipping_notes` en `shipment.order_id` zijn nullable. Datums zonder tijd gebruiken `date`; tijdstempels gebruiken `timestamp with time zone`. Het importproces moet de tijdzone van oude tijdstempels expliciet bepalen.
+- `shipping_notes` en `shipment.order_id` zijn nullable. Orderdatums zonder tijd gebruiken `date`; tijdstempels gebruiken `timestamp with time zone`. Sinds de Sprint 3-shipmentmigratie is `shipment_date` een volledig UTC-tijdstip, zodat de Python-API geen tijdinformatie verliest. Het importproces moet de tijdzone van oude tijdstempels expliciet bepalen.
 - Geldbedragen en gewichten gebruiken decimal/numeric. De gekozen precisie is respectievelijk (18,4) en (18,6); het importproces moet waarden buiten dat bereik rapporteren.
 
 ## Goedgekeurde schemaregels — CH-010

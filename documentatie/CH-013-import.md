@@ -25,7 +25,7 @@ Een ontbrekend bestand, onleesbare JSON, dubbel benoemde JSON-velden of een bron
 
 De omzettingen volgen de bestaande generator en het EF-model:
 
-- `order_date`, `request_date` en `shipment_date` worden een UTC-kalenderdatum voor DateOnly. De tijd binnen die dag verdwijnt uit de doelkolom; de originele JSON blijft behouden. Het verslag telt deze omzettingen.
+- `order_date` en `request_date` worden een UTC-kalenderdatum voor DateOnly; het verslag telt deze omzettingen. Sinds Sprint 3 behoudt `shipment_date` het volledige UTC-tijdstip. Eerdere importverslagen dateren van vóór deze schemawijziging. Een bestaande ingekorte shipmentdatum kan alleen met de oorspronkelijke bron worden hersteld; de nieuwe migratie verzint geen ontbrekende tijd.
 - `created_at` en `updated_at` behouden het tijdstip en worden naar UTC genormaliseerd. Een timestamp zonder tijdzone wordt afgewezen.
 - Een numerieke `item.commodity_code` wordt tekst. Dat sluit aan op de C#-entity.
 - Geld en gewichten gebruiken exact Decimal. Getallen die buiten de precisie vallen of afgerond zouden worden, worden afgewezen.
@@ -35,7 +35,7 @@ De omzettingen volgen de bestaande generator en het EF-model:
 
 De opdracht accepteert alleen databasenamen van de vorm `cargohub_import_test_<naam>`. Zowel Python als het SQL-script controleren die naam. Zonder `--database` wordt alleen gevalideerd. Rechtstreeks verbinden kan alleen via localhost; de Docker-optie gebruikt de lokale testcontainer. Gebruik hiervoor geen Docker-context die naar een andere omgeving verwijst.
 
-De vijftien zakelijke doeltabellen moeten leeg zijn en beide vereiste CH-012-migraties moeten aanwezig zijn. De import vergrendelt de tabellen, controleert leegte en schrijft alles binnen één transactie. Hij maakt geen database aan, voert geen reset of upsert uit en verwijdert geen bestaande records. Het verslag moet buiten de bronmap worden opgeslagen.
+De vijftien zakelijke doeltabellen moeten leeg zijn en alle actuele EF-migraties moeten aanwezig zijn. De import vergrendelt de tabellen, controleert leegte en schrijft alles binnen één transactie. Hij maakt geen database aan, voert geen reset of upsert uit en verwijdert geen bestaande records. Het verslag moet buiten de bronmap worden opgeslagen.
 
 IDs en samengestelde sleutels blijven behouden. Identity-sequences worden transactioneel boven de hoogste geïmporteerde ID gezet, zodat een later gegenereerde ID niet op geïmporteerde gegevens botst.
 

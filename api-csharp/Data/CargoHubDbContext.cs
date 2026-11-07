@@ -13,6 +13,8 @@ public sealed class CargoHubDbContext(DbContextOptions<CargoHubDbContext> option
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Supplier> Suppliers => Set<Supplier>();
+    public DbSet<Shipment> Shipments => Set<Shipment>();
+    public DbSet<ShipmentItem> ShipmentItems => Set<ShipmentItem>();
     public DbSet<Inventory> Inventories => Set<Inventory>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
@@ -93,7 +95,7 @@ public sealed class CargoHubDbContext(DbContextOptions<CargoHubDbContext> option
             foreach (var property in entity.GetProperties())
             {
                 property.SetColumnName(Regex.Replace(property.Name, "(?<!^)([A-Z])", "_$1").ToLowerInvariant());
-                if (property.ClrType == typeof(DateTimeOffset))
+                if (property.Name is "CreatedAt" or "UpdatedAt")
                     property.SetDefaultValueSql("CURRENT_TIMESTAMP");
             }
         }

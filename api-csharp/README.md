@@ -98,3 +98,7 @@ De documentatie toont ook de bestaande beperkingen: enkele databasefouten geven 
 ### Wie heeft welk onderdeel gemaakt?
 
 De Swagger-groepen vermelden de auteur op basis van de controllercommits. Magazijnen, locaties, artikelen, voorraad en de leveranciers-artikelroute zijn van Artur. De CRUD voor artikelgroepen, artikellijnen en artikeltypen is van Jeffrey Doornbos. Klanten, leveranciers-CRUD, orders en orderregels zijn van Ihssane, inclusief `GET /clients/{id}/orders`. De gekoppelde `GET /{id}/items`-routes binnen de drie classificatiegroepen en bij leveranciers zijn van Artur. Elk endpoint vermeldt daarom ook afzonderlijk **Gemaakt door**. Anmols databasebijdragen leveren op dit moment geen eigen controllergroep op.
+
+## Shipments (Sprint 3)
+
+De negen shipmentroutes zijn toegevoegd, inclusief orderlijsten en voorraadcorrecties bij wijziging van regels. Zie [gedrag, migratie en testbewijs](../documentatie/Sprint-3-shipments.md). Voer de nieuwe EF-migratie uit vóór het starten; `shipment_date` behoudt nu het volledige tijdstip.
