@@ -17,17 +17,30 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
         ["item_groups"] = ("Artikelgroepen", typeof(ItemGroup)),
         ["item_lines"] = ("Artikellijnen", typeof(ItemLine)),
         ["item_types"] = ("Artikeltypen", typeof(ItemType)),
-        ["suppliers"] = ("Leveranciers", typeof(Item))
+        ["suppliers"] = ("Leveranciers", typeof(Item)),
+        ["clients"] = ("Klanten", typeof(Client)),
+        ["orders"] = ("Orders", typeof(Order))
     };
 
     public static string TagFor(string path)
     {
         var resource = path.Split('/').ElementAtOrDefault(2) ?? path;
         return Resources.TryGetValue(resource, out var entry)
-            ? $"{entry.Label} - {(IsClassification(resource) ? "Jeffrey" : "Artur")}" : resource;
+            ? $"{entry.Label} - {GroupAuthorFor(resource)}" : resource;
     }
 
     private static bool IsClassification(string resource) => resource is "item_groups" or "item_lines" or "item_types";
+
+    private static string GroupAuthorFor(string resource) => IsClassification(resource) ? "Jeffrey"
+        : resource is "clients" or "suppliers" or "orders" ? "Ihssane" : "Artur";
+
+    private static string? AuthorFor(string? controller) => controller switch
+    {
+        "ItemGroupsController" or "ItemLinesController" or "ItemTypesController" => "Jeffrey Doornbos",
+        "ClientsController" or "SuppliersController" or "OrdersController" or "OrderItemsController" => "Ihssane",
+        "WarehousesController" or "LocationsController" or "ItemsController" or "InventoriesController" => "Artur",
+        _ => null
+    };
 
     public void Apply(OpenApiDocument document, DocumentFilterContext context)
     {
@@ -37,13 +50,25 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
             if (tag is null) continue;
             tag.Description = IsClassification(resource)
                 ? "CRUD omgezet door Jeffrey Doornbos. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
-                : "Endpoints geïmplementeerd door Artur.";
+                : resource == "suppliers"
+                    ? "CRUD geïmplementeerd door Ihssane. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+                    : $"Endpoints geïmplementeerd door {GroupAuthorFor(resource)}.";
         }
     }
 
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         var path = context.ApiDescription.RelativePath!.Split('?')[0];
+        var controller = context.MethodInfo.DeclaringType?.Name;
+        var author = AuthorFor(controller);
+        var attribution = author is null ? "" : $"**Gemaakt door: {author}.**\n\n";
+        operation.Description = attribution + operation.Description;
+
+        // These merged controllers retain their own generated request/response schemas.
+        // In particular, supplier CRUD must not receive the Item examples of /suppliers/{id}/items.
+        if (controller is "ClientsController" or "SuppliersController" or "OrdersController" or "OrderItemsController")
+            return;
+
         var segments = path.Split('/');
         var resource = segments.ElementAtOrDefault(2);
         if (resource is null || !Resources.TryGetValue(resource, out var entry)) return;
@@ -68,9 +93,7 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
             _ when collection => "lijst ophalen",
             _ => "één record ophalen"
         });
-        var author = context.MethodInfo.DeclaringType?.Name is "ItemGroupsController" or "ItemLinesController" or "ItemTypesController"
-            ? "Jeffrey Doornbos" : "Artur";
-        operation.Description = $"**Gemaakt door: {author}.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ";
+        operation.Description = attribution + "Voorbeelden zijn fictief en gebruiken snake_case-veldnamen. ";
         operation.Responses = new OpenApiResponses();
 
         foreach (var parameter in (operation.Parameters ?? []).OfType<OpenApiParameter>())
