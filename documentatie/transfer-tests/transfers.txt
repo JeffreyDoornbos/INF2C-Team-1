@@ -1,0 +1,36 @@
+PASS: Existing migrations build the isolated database and model matches snapshot
+PASS: Initial transfer list/detail/items responses — HTTP and PostgreSQL match original Python models/handler
+PASS: POST forces Scheduled and stores lines without stock movement — HTTP and PostgreSQL match original Python models/handler
+PASS: PUT replaces only the selected transfer item rows — HTTP and PostgreSQL match original Python models/handler
+PASS: PUT without items preserves item rows — HTTP and PostgreSQL match original Python models/handler
+PASS: PUT with null items preserves item rows — HTTP and PostgreSQL match original Python models/handler
+PASS: DELETE removes header and its own item rows without stock movement — HTTP and PostgreSQL match original Python models/handler
+PASS: Original Python commit decreases source, increases/creates destination and sets Processed — HTTP and PostgreSQL match original Python models/handler
+PASS: Repeated Processed commit is an empty 200 without another stock movement, timestamp change or processing event
+PASS: Committed transfers, items and stock survive an API process restart — HTTP and PostgreSQL match original Python models/handler
+PASS: Unknown GET/PUT/DELETE preserve legacy null/[]/no-op behavior; unknown commit returns 404
+PASS: Processed transfer headers and item history cannot be changed or deleted
+PASS: Ordinary PUT cannot bypass commit by changing the status to Processed
+PASS: Malformed, null, array and missing-field POST bodies return 400
+PASS: Empty, null, duplicate, unknown, non-positive and fractional transfer lines are rejected without partial headers
+PASS: Equal/missing locations and duplicate transfer IDs return 400/409
+PASS: Header PUT keeps route ID, creation time and null/omitted item rows
+PASS: POST without ID generates a usable identity and server timestamps
+PASS: Available-stock check uses on_hand minus allocated; insufficient stock changes nothing
+PASS: A transfer exactly equal to available stock succeeds without moving allocated stock
+PASS: Missing source inventory refuses commit instead of creating unbacked destination stock
+PASS: Destination integer overflow is rejected with no partial stock movement
+PASS: Late transfer-item insertion error rolls back a newly inserted transfer header
+PASS: Failed PUT restores header, timestamps and original item rows after replacement began
+PASS: Destination update failure rolls back both inventories and transfer status, without a processing event
+PASS: Retry after complete rollback processes the transfer successfully
+PASS: Concurrent commits of the same transfer both return 200 and book/log only once
+PASS: Different transfers cannot jointly exceed source stock: one succeeds and one stays Scheduled
+PASS: Concurrent transfers create one shared missing destination row and preserve both increments
+PASS: Opposite-direction transfers complete without deadlock or lost stock
+PASS: A shortage in a later transfer item leaves every earlier item, destination and status unchanged
+PASS: Commit versus DELETE serializes: either Processed history survives or deletion prevents all stock movement
+PASS: All transfer route families appear in OpenAPI; unsupported methods/subroutes return 405/404
+PASS: Final concurrent and processed state survives another actual process restart
+PASS: Final database has no orphan transfer items or invalid stock allocations
+PASS: 35 transfer acceptance checks.
