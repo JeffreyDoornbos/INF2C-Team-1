@@ -77,7 +77,7 @@ Start de API met de ingestelde PostgreSQL-verbinding en de bestaande migraties:
 dotnet run --project api-csharp --launch-profile http
 ```
 
-Open **http://localhost:5268/swagger**. De startprofielen openen deze pagina automatisch. Alle 43 huidige methode-padcombinaties staan gegroepeerd per onderwerp, inclusief de oude voorraadroute die altijd 404 geeft. Elk endpoint bevat Nederlandse uitleg, statuscodes en voorbeelden. Met **Try it out** en **Execute** stuur je echte aanvragen en zie je de statuscode en het antwoord van de server. Het OpenAPI-bestand staat op `/swagger/v1/swagger.json`.
+Open **http://localhost:5268/swagger**. De startprofielen openen deze pagina automatisch. Alle 77 huidige methode-padcombinaties staan gegroepeerd per onderwerp en auteur, inclusief de oude voorraadroute die altijd 404 geeft. Swagger toont de parameters en invoerschema’s. De oorspronkelijke demoacties en Anmols zending- en transferroutes bevatten daarnaast ingevulde voorbeelden en uitleg van het gedrag. Met **Try it out** en **Execute** stuur je echte aanvragen en zie je de statuscode en het antwoord van de server. Het OpenAPI-bestand staat op `/swagger/v1/swagger.json`.
 
 Swagger staat standaard aan in Development. Voor een expliciete demo buiten Development stel je `Swagger__Enabled=true` in. Met `Swagger__Enabled=false` kun je het uitschakelen. De documentatie voegt geen authenticatie toe; die ontbreekt momenteel nog in de API.
 
@@ -97,7 +97,7 @@ De documentatie toont ook de bestaande beperkingen: enkele databasefouten geven 
 
 ### Wie heeft welk onderdeel gemaakt?
 
-De Swagger-groepen vermelden de auteur op basis van de controllercommits. Magazijnen, locaties, artikelen, voorraad en de leveranciers-artikelroute zijn van Artur. De CRUD voor artikelgroepen, artikellijnen en artikeltypen is van Jeffrey Doornbos. Klanten, leveranciers-CRUD, orders en orderregels zijn van Ihssane, inclusief `GET /clients/{id}/orders`. De gekoppelde `GET /{id}/items`-routes binnen de drie classificatiegroepen en bij leveranciers zijn van Artur. Elk endpoint vermeldt daarom ook afzonderlijk **Gemaakt door**. Anmols databasebijdragen leveren op dit moment geen eigen controllergroep op.
+De Swagger-groepen vermelden de auteur op basis van de controllercommits. Magazijnen, locaties, artikelen, voorraad en de leveranciers-artikelroute zijn van Artur. De CRUD voor artikelgroepen, artikellijnen en artikeltypen is van Jeffrey Doornbos. Klanten, leveranciers-CRUD, orders en orderregels zijn van Ihssane, inclusief `GET /clients/{id}/orders`. De gekoppelde `GET /{id}/items`-routes binnen de drie classificatiegroepen en bij leveranciers zijn van Artur. Elk endpoint vermeldt daarom ook afzonderlijk **Gemaakt door**. Zendingen en transfers zijn van Anmol Haribhajan; beide groepen en hun 16 acties vermelden zijn naam.
 
 ## Transfers (Sprint 2)
 
@@ -106,3 +106,6 @@ De zeven transferroutes zijn toegevoegd, inclusief commit, gekoppelde itemregels
 ## Shipments (Sprint 3)
 
 De negen shipmentroutes zijn toegevoegd, inclusief orderlijsten en voorraadcorrecties bij wijziging van regels. Zie [gedrag, migratie en testbewijs](../documentatie/Sprint-3-shipments.md). Voer de nieuwe EF-migratie uit vóór het starten; `shipment_date` behoudt nu het volledige tijdstip.
+### Zendingen en transfers demonstreren
+
+Voer eerst `dotnet ef database update --project api-csharp` uit tegen jullie eigen lokale database. De zendingmigratie bewaart `shipment_date` voortaan als tijdstip. Voorbeeldverzoeken staan onder **Zendingen - Anmol** en **Transfers - Anmol**. Gebruik een vrij demo-ID en controleer vooraf de relaties en beschikbare voorraad. Het transfervoorbeeld gebruikt artikel **119**, bronlocatie **124** en bestemming **1** uit de oude importdata. Met `PUT /transfers/{id}/commit` wordt voorraad echt verplaatst; herhalen verplaatst niet opnieuw. Een verwerkte transfer kan niet meer worden gewijzigd of verwijderd. Gebruik hiervoor een aparte demodatabase.

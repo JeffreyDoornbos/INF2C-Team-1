@@ -1,0 +1,5 @@
+PASS: Swagger UI/JSON HTTP 200; 77 actions, 12 groups, unique operation IDs; authors: {'Artur': 28, 'Jeffrey Doornbos': 15, 'Ihssane': 18, 'Anmol Haribhajan': 16}
+PASS: all 37 documented GET actions with imported legacy data; old inventory-ID route gives its documented 404.
+PASS: all nine shipment actions, documented request examples, persisted header update, item/order replacements, duplicate 409 and cleanup.
+PASS: all seven transfer actions and examples; commit changes stock once, repeat is idempotent, Processed delete 409 and unknown commit 404.
+Temporary HTTP database/process cleaned up.

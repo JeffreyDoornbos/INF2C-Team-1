@@ -1,0 +1,70 @@
+{
+  "prepared": true,
+  "demo_id": 900091,
+  "source": 100,
+  "allocated": 20,
+  "destination": 20,
+  "transfer": "Scheduled",
+  "events": [
+    {
+      "method": "GET",
+      "path": "/warehouses/900091",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/items/900091",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/locations/900091",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/locations/900092",
+      "status": 404
+    },
+    {
+      "method": "POST",
+      "path": "/warehouses",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/locations",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/locations",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/items",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/inventories",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/inventories",
+      "status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/transfers",
+      "status": 201
+    }
+  ]
+}

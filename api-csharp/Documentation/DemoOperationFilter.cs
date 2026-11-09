@@ -19,7 +19,9 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
         ["item_types"] = ("Artikeltypen", typeof(ItemType)),
         ["suppliers"] = ("Leveranciers", typeof(Item)),
         ["clients"] = ("Klanten", typeof(Client)),
-        ["orders"] = ("Orders", typeof(Order))
+        ["orders"] = ("Orders", typeof(Order)),
+        ["shipments"] = ("Zendingen", typeof(Shipment)),
+        ["transfers"] = ("Transfers", typeof(Transfer))
     };
 
     public static string TagFor(string path)
@@ -32,12 +34,14 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
     private static bool IsClassification(string resource) => resource is "item_groups" or "item_lines" or "item_types";
 
     private static string GroupAuthorFor(string resource) => IsClassification(resource) ? "Jeffrey"
-        : resource is "clients" or "suppliers" or "orders" ? "Ihssane" : "Artur";
+        : resource is "clients" or "suppliers" or "orders" ? "Ihssane"
+        : resource is "shipments" or "transfers" ? "Anmol" : "Artur";
 
     private static string? AuthorFor(string? controller) => controller switch
     {
         "ItemGroupsController" or "ItemLinesController" or "ItemTypesController" => "Jeffrey Doornbos",
         "ClientsController" or "SuppliersController" or "OrdersController" or "OrderItemsController" => "Ihssane",
+        "ShipmentsController" or "TransfersController" => "Anmol Haribhajan",
         "WarehousesController" or "LocationsController" or "ItemsController" or "InventoriesController" => "Artur",
         _ => null
     };
@@ -63,6 +67,12 @@ public sealed class DemoOperationFilter : IOperationFilter, IDocumentFilter
         var author = AuthorFor(controller);
         var attribution = author is null ? "" : $"**Gemaakt door: {author}.**\n\n";
         operation.Description = attribution + operation.Description;
+
+        if (controller is "ShipmentsController" or "TransfersController")
+        {
+            MovementDocumentation.Apply(operation, context);
+            return;
+        }
 
         // These merged controllers retain their own generated request/response schemas.
         // In particular, supplier CRUD must not receive the Item examples of /suppliers/{id}/items.

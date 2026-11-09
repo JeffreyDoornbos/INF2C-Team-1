@@ -1,0 +1,7 @@
+  CargoHub.Api -> /Users/jeffreydoornbos/INF2C-Team-1/api-csharp/bin/Debug/net10.0/CargoHub.Api.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.53

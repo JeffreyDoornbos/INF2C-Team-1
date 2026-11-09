@@ -1,0 +1,75 @@
+Validated equivalent responses and completed 100 warm-ups for each endpoint/implementation.
+C#     /api/v1/warehouses                     clients= 1 round=1 duration=0.085s errors=0
+Python /api/v1/warehouses                     clients= 1 round=1 duration=0.025s errors=0
+C#     /api/v1/warehouses                     clients= 1 round=2 duration=0.060s errors=0
+Python /api/v1/warehouses                     clients= 1 round=2 duration=0.022s errors=0
+Python /api/v1/warehouses                     clients= 1 round=3 duration=0.020s errors=0
+C#     /api/v1/warehouses                     clients= 1 round=3 duration=0.057s errors=0
+Python /api/v1/warehouses                     clients=10 round=1 duration=0.062s errors=0
+C#     /api/v1/warehouses                     clients=10 round=1 duration=0.018s errors=0
+C#     /api/v1/warehouses                     clients=10 round=2 duration=0.023s errors=0
+Python /api/v1/warehouses                     clients=10 round=2 duration=0.091s errors=0
+Python /api/v1/warehouses                     clients=10 round=3 duration=0.034s errors=0
+C#     /api/v1/warehouses                     clients=10 round=3 duration=0.017s errors=0
+Python /api/v1/warehouses                     clients=25 round=1 duration=0.067s errors=0
+C#     /api/v1/warehouses                     clients=25 round=1 duration=0.028s errors=0
+C#     /api/v1/warehouses                     clients=25 round=2 duration=0.020s errors=0
+Python /api/v1/warehouses                     clients=25 round=2 duration=0.067s errors=0
+C#     /api/v1/warehouses                     clients=25 round=3 duration=0.023s errors=0
+Python /api/v1/warehouses                     clients=25 round=3 duration=0.064s errors=0
+Python /api/v1/items                          clients= 1 round=1 duration=0.228s errors=0
+C#     /api/v1/items                          clients= 1 round=1 duration=0.279s errors=0
+C#     /api/v1/items                          clients= 1 round=2 duration=0.262s errors=0
+Python /api/v1/items                          clients= 1 round=2 duration=0.305s errors=0
+C#     /api/v1/items                          clients= 1 round=3 duration=0.219s errors=0
+Python /api/v1/items                          clients= 1 round=3 duration=0.254s errors=0
+Python /api/v1/items                          clients=10 round=1 duration=0.222s errors=0
+C#     /api/v1/items                          clients=10 round=1 duration=0.068s errors=0
+C#     /api/v1/items                          clients=10 round=2 duration=0.071s errors=0
+Python /api/v1/items                          clients=10 round=2 duration=0.224s errors=0
+Python /api/v1/items                          clients=10 round=3 duration=0.223s errors=0
+C#     /api/v1/items                          clients=10 round=3 duration=0.063s errors=0
+C#     /api/v1/items                          clients=25 round=1 duration=0.066s errors=0
+Python /api/v1/items                          clients=25 round=1 duration=1.071s errors=0
+Python /api/v1/items                          clients=25 round=2 duration=0.606s errors=0
+C#     /api/v1/items                          clients=25 round=2 duration=0.068s errors=0
+Python /api/v1/items                          clients=25 round=3 duration=0.605s errors=0
+C#     /api/v1/items                          clients=25 round=3 duration=0.071s errors=0
+C#     /api/v1/items/1                        clients= 1 round=1 duration=0.044s errors=0
+Python /api/v1/items/1                        clients= 1 round=1 duration=0.132s errors=0
+Python /api/v1/items/1                        clients= 1 round=2 duration=0.126s errors=0
+C#     /api/v1/items/1                        clients= 1 round=2 duration=0.037s errors=0
+Python /api/v1/items/1                        clients= 1 round=3 duration=0.126s errors=0
+C#     /api/v1/items/1                        clients= 1 round=3 duration=0.044s errors=0
+Python /api/v1/items/1                        clients=10 round=1 duration=0.129s errors=0
+C#     /api/v1/items/1                        clients=10 round=1 duration=0.015s errors=0
+C#     /api/v1/items/1                        clients=10 round=2 duration=0.013s errors=0
+Python /api/v1/items/1                        clients=10 round=2 duration=0.104s errors=0
+Python /api/v1/items/1                        clients=10 round=3 duration=0.128s errors=0
+C#     /api/v1/items/1                        clients=10 round=3 duration=0.013s errors=0
+C#     /api/v1/items/1                        clients=25 round=1 duration=0.014s errors=0
+Python /api/v1/items/1                        clients=25 round=1 duration=0.198s errors=0
+C#     /api/v1/items/1                        clients=25 round=2 duration=0.015s errors=0
+Python /api/v1/items/1                        clients=25 round=2 duration=0.223s errors=0
+C#     /api/v1/items/1                        clients=25 round=3 duration=0.016s errors=0
+Python /api/v1/items/1                        clients=25 round=3 duration=0.222s errors=0
+Python /api/v1/items/1/inventory/totals       clients= 1 round=1 duration=0.341s errors=0
+C#     /api/v1/items/1/inventory/totals       clients= 1 round=1 duration=0.044s errors=0
+C#     /api/v1/items/1/inventory/totals       clients= 1 round=2 duration=0.034s errors=0
+Python /api/v1/items/1/inventory/totals       clients= 1 round=2 duration=0.324s errors=0
+Python /api/v1/items/1/inventory/totals       clients= 1 round=3 duration=0.329s errors=0
+C#     /api/v1/items/1/inventory/totals       clients= 1 round=3 duration=0.043s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=10 round=1 duration=0.015s errors=0
+Python /api/v1/items/1/inventory/totals       clients=10 round=1 duration=0.349s errors=0
+Python /api/v1/items/1/inventory/totals       clients=10 round=2 duration=0.420s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=10 round=2 duration=0.015s errors=0
+Python /api/v1/items/1/inventory/totals       clients=10 round=3 duration=0.384s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=10 round=3 duration=0.015s errors=0
+Python /api/v1/items/1/inventory/totals       clients=25 round=1 duration=1.159s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=25 round=1 duration=0.019s errors=0
+Python /api/v1/items/1/inventory/totals       clients=25 round=2 duration=2.049s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=25 round=2 duration=0.020s errors=0
+C#     /api/v1/items/1/inventory/totals       clients=25 round=3 duration=0.015s errors=0
+Python /api/v1/items/1/inventory/totals       clients=25 round=3 duration=1.135s errors=0
+COMPLETE: 7200 measured requests, 0 errors, source JSON unchanged.
+Owned benchmark processes and database cleaned up.

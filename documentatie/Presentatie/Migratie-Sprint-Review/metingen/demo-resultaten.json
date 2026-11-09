@@ -1,0 +1,122 @@
+{
+  "demo_id": 900091,
+  "before": {
+    "source": 100,
+    "allocated": 20,
+    "destination": 20,
+    "status": "Scheduled"
+  },
+  "after": {
+    "source": 90,
+    "allocated": 20,
+    "destination": 30,
+    "status": "Processed"
+  },
+  "repeated": {
+    "source": 90,
+    "allocated": 20,
+    "destination": 30,
+    "status": "Processed"
+  },
+  "insufficient_stock_status": 409,
+  "total_stock_before": 120,
+  "total_stock_after": 120,
+  "events": [
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900092",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/transfers/900091/commit",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900092",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/transfers/900091/commit",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900092",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900092",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/transfers",
+      "status": 201
+    },
+    {
+      "method": "PUT",
+      "path": "/transfers/900092/commit",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900091",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/inventories/900091/900092",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/transfers/900091",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/transfers/900092",
+      "status": 200
+    }
+  ],
+  "persisted_after_process_restart": true
+}

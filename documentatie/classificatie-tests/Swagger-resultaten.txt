@@ -40,3 +40,16 @@ PASS: In totaal alle 43 gedocumenteerde acties gecontroleerd met 55 assertions.
 PASS: Na opruimen staan er nog precies de 80.465 geïmporteerde zakelijke records.
 PASS: Swagger UI en warehouses geven HTTP 200 op localhost:5268.
 De lokale API blijft gestart voor de gebruiker. Geen deployment naar Ubuntu uitgevoerd.
+
+Aanvulling Anmols merges - 9 november 2026:
+PASS: Build zonder fouten of waarschuwingen; Swagger UI en OpenAPI JSON HTTP 200.
+PASS: Alle 77 acties hebben de juiste auteursvermelding in 12 groepen: 28 Artur, 15 Jeffrey Doornbos, 18 Ihssane, 16 Anmol Haribhajan.
+PASS: Alle 37 GET-acties met geïmporteerde legacydata; de oude voorraad-ID-route geeft de gedocumenteerde 404, de overige 36 geven 200.
+PASS: Alle negen shipmentacties uitgevoerd met de Swagger-voorbeelden, inclusief header/items/orders wijzigen, duplicaat 409 en verwijderen.
+PASS: Alle zeven transferacties uitgevoerd met de Swagger-voorbeelden, inclusief voorraadverplaatsing bij commit, idempotent herhalen, Processed-delete 409 en ontbrekende commit 404.
+PASS: 35 transferacceptatiecontroles, 31 shipmentacceptatiecontroles, 71 classificatieregressiecontroles en 25 bestaande unittests.
+Het eerste transfervoorbeeld gaf terecht 409 door ontbrekende beschikbare voorraad bij artikel 1/locatie 1. Het definitieve voorbeeld gebruikt artikel 119/bronlocatie 124 uit de importdata en commit slaagt.
+Schrijftests gebruikten uitsluitend tijdelijke databases op een aparte lokale PostgreSQL-testinstantie; processen en databases zijn opgeruimd.
+Lokale cargohub_demo-database bijgewerkt met PreserveShipmentTimestamp; bestaande dates worden UTC-middernacht. Deze migratie reconstrueert geen eerder verloren tijdstippen.
+Lokale API op localhost:5268 gestart; shipments geeft 6.132 records, transfers 800 records, beide HTTP 200. Geen deployment of push uitgevoerd.
+Ruwe uitvoer: documentatie/swagger-tests/2026-11-09-*.txt.

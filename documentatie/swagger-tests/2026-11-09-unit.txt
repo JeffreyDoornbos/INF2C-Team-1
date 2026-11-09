@@ -1,0 +1,8 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  CargoHub.Api -> /Users/jeffreydoornbos/INF2C-Team-1/api-csharp/bin/Debug/net10.0/CargoHub.Api.dll
+  CargoHub.Api.Tests -> /Users/jeffreydoornbos/INF2C-Team-1/tests/CargoHub.Api.Tests/bin/Debug/net10.0/CargoHub.Api.Tests.dll
+Test run for /Users/jeffreydoornbos/INF2C-Team-1/tests/CargoHub.Api.Tests/bin/Debug/net10.0/CargoHub.Api.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    25, Skipped:     0, Total:    25, Duration: 340 ms - CargoHub.Api.Tests.dll (net10.0)
