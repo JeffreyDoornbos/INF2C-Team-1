@@ -109,3 +109,10 @@ De negen shipmentroutes zijn toegevoegd, inclusief orderlijsten en voorraadcorre
 ### Zendingen en transfers demonstreren
 
 Voer eerst `dotnet ef database update --project api-csharp` uit tegen jullie eigen lokale database. De zendingmigratie bewaart `shipment_date` voortaan als tijdstip. Voorbeeldverzoeken staan onder **Zendingen - Anmol** en **Transfers - Anmol**. Gebruik een vrij demo-ID en controleer vooraf de relaties en beschikbare voorraad. Het transfervoorbeeld gebruikt artikel **119**, bronlocatie **124** en bestemming **1** uit de oude importdata. Met `PUT /transfers/{id}/commit` wordt voorraad echt verplaatst; herhalen verplaatst niet opnieuw. Een verwerkte transfer kan niet meer worden gewijzigd of verwijderd. Gebruik hiervoor een aparte demodatabase.
+
+## Geautomatiseerde tests
+
+De aparte map [Tests](Tests/README.md) bevat PostgreSQL-integratietests voor de
+CI-pipeline, met een `summary` boven iedere test. Start beide testprojecten met
+`dotnet test CargoHub.sln --configuration Release` vanuit de repositoryhoofdmap.
+Zie de testinstructies voor de tijdelijke database en de vereiste omgevingsvariabele.
