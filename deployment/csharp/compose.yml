@@ -1,0 +1,77 @@
+name: cargohub-v2
+
+x-api: &api
+  restart: unless-stopped
+  environment:
+    ASPNETCORE_ENVIRONMENT: Production
+    ASPNETCORE_URLS: http://+:8080
+    Api__Version: v2
+    Swagger__Enabled: 'true'
+    Swagger__RoutePrefix: api/v2/swagger
+    ConnectionStrings__CargoHub: Host=db;Port=5432;Database=cargohub_v2;Username=cargohub;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the server .env}
+  depends_on:
+    db:
+      condition: service_healthy
+  read_only: true
+  tmpfs:
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '3'
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cargohub
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the server .env}
+      POSTGRES_DB: cargohub_v2
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U cargohub -d cargohub_v2']
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+
+  api-blue:
+    <<: *api
+    image: ${CARGOHUB_IMAGE_BLUE:-cargohub-api:uninitialized}
+    ports:
+      - '127.0.0.1:8501:8080'
+
+  api-green:
+    <<: *api
+    image: ${CARGOHUB_IMAGE_GREEN:-cargohub-api:uninitialized}
+    ports:
+      - '127.0.0.1:8502:8080'
+
+  proxy:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '3000:80'
+      - '8401:80'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+
+volumes:
+  postgres-data:
