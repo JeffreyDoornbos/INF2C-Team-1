@@ -6,6 +6,8 @@ upstream cargohub_v2 {
 server {
     listen 80 default_server;
     server_name 145.24.237.22 localhost;
+    # Python's existing API_KEY header contains an underscore and must be forwarded.
+    underscores_in_headers on;
     client_max_body_size 5m;
     proxy_http_version 1.1;
     proxy_set_header Host $http_host;
