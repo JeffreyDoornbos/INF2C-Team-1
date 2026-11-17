@@ -30,11 +30,14 @@ Alleen een geslaagde run op `main` maakt vervolgens een releasepakket, bijvoorbe
 idempotente EF-migraties, de actuele JSON-beginimport en een checksummanifest.
 De pipeline publiceert het pakket als GitHub Release en artifact.
 
-GitHub Actions uploadt het pakket **via SSH** naar `cargohub-deploy@145.24.237.22`.
+GitHub Actions uploadt het pakket **via SSH op poort 8422** naar `cargohub-deploy@145.24.237.22`.
 De sleutel staat uitsluitend in het repository-secret `VPS_DEPLOY_KEY`.
 `known_hosts` bevat de via de bestaande SSH-verbinding gecontroleerde publieke
 hostkey. De deploysleutel mag alleen de release-ontvanger uitvoeren: geen
-interactieve shell, poortforwarding of algemene sudo-toegang.
+interactieve shell, poortforwarding of algemene sudo-toegang. De aparte listener
+accepteert alleen deze deploygebruiker en sleutel, geen wachtwoorden. Hij gebruikt
+poort 8422 omdat de GitHub-runner poort 22 niet kan bereiken. De bestaande
+beheerdersverbinding op poort 22 blijft ongewijzigd.
 
 ## Uitrol en behoud van data
 
@@ -84,7 +87,7 @@ Bouw daarna lokaal of op een Linux-builder een release en upload die:
 
 ```bash
 bash deployment/csharp/build-release.sh 2.0.0.1 /tmp/cargohub-release
-ssh -T -i /pad/naar/deploy-key cargohub-deploy@145.24.237.22 \
+ssh -T -p 8422 -i /pad/naar/deploy-key cargohub-deploy@145.24.237.22 \
   < /tmp/cargohub-release/CargoHub_API_version_2.0.0.1.zip
 ```
 

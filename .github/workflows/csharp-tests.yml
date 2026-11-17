@@ -107,7 +107,7 @@ jobs:
           cp deployment/csharp/known_hosts "$HOME/.ssh/known_hosts"
           cd "$RUNNER_TEMP/release"
           sha256sum --check "CargoHub_API_version_$VERSION.zip.sha256"
-          ssh -T -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=yes \
+          ssh -T -p 8422 -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=yes \
             -i "$HOME/.ssh/cargohub_deploy" cargohub-deploy@145.24.237.22 \
             < "CargoHub_API_version_$VERSION.zip"
       - name: Check public V2 endpoints
