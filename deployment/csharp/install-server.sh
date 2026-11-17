@@ -40,6 +40,7 @@ chown cargohub-deploy:cargohub-deploy /home/cargohub-deploy/.ssh/authorized_keys
 echo 'cargohub-deploy ALL=(root) NOPASSWD: /opt/cargohub-v2/receive-release.sh' > /etc/sudoers.d/cargohub-v2-deploy
 chmod 440 /etc/sudoers.d/cargohub-v2-deploy
 visudo -cf /etc/sudoers.d/cargohub-v2-deploy
+bash "$source_dir/install-deploy-ssh.sh"
 touch /var/log/cargohub-deploy.log
 chmod 644 /var/log/cargohub-deploy.log
 systemctl enable --now docker
