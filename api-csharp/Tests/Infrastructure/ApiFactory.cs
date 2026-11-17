@@ -12,13 +12,16 @@ namespace CargoHub.Api.IntegrationTests.Infrastructure;
 /// Start de echte API in een testhost en vervangt uitsluitend de databaseconfiguratie.
 /// De publieke DbContext verwijst naar dezelfde assembly als het API-startpunt.
 /// </summary>
-public sealed class ApiFactory(string connectionString, bool swaggerEnabled = true)
+public sealed class ApiFactory(string connectionString, bool swaggerEnabled = true,
+    string apiVersion = "v1", string swaggerPrefix = "swagger")
     : WebApplicationFactory<CargoHubDbContext>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Production");
         builder.UseSetting("Swagger:Enabled", swaggerEnabled.ToString());
+        builder.UseSetting("Api:Version", apiVersion);
+        builder.UseSetting("Swagger:RoutePrefix", swaggerPrefix);
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<CargoHubDbContext>();

@@ -1,10 +1,13 @@
-name: C# build and tests
+name: CargoHub CI and SSH deployment
 
 on:
   push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: cargohub-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -43,11 +46,72 @@ jobs:
       - name: Build
         run: dotnet build CargoHub.sln --configuration Release --no-restore
       - name: Test
-        run: dotnet test CargoHub.sln --configuration Release --no-build --logger trx --results-directory TestResults
+        run: dotnet test CargoHub.sln --configuration Release --no-build --logger trx --collect:"XPlat Code Coverage" --results-directory TestResults
+      - name: Test and coverage overview
+        if: always()
+        run: python3 deployment/csharp/test-summary.py TestResults
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: csharp-test-results
-          path: TestResults/**/*.trx
+          path: |
+            TestResults/**/*.trx
+            TestResults/**/coverage.cobertura.xml
           if-no-files-found: warn
+
+  release-and-deploy:
+    name: Versioned release and SSH deployment
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build versioned Linux release
+        id: package
+        shell: bash
+        run: |
+          version="2.0.${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          bash deployment/csharp/build-release.sh "$version" "$RUNNER_TEMP/release"
+      - name: Store release package
+        uses: actions/upload-artifact@v4
+        with:
+          name: CargoHub_API_version_${{ steps.package.outputs.version }}
+          path: ${{ runner.temp }}/release/*
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.package.outputs.version }}
+        run: |
+          gh release create "v$VERSION" "$RUNNER_TEMP/release/"* \
+            --target "$GITHUB_SHA" --title "CargoHub API $VERSION" \
+            --notes "Tested C# V2 release for Docker Compose and PostgreSQL. Commit: $GITHUB_SHA."
+      - name: Deploy over restricted SSH connection
+        env:
+          VPS_DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          VERSION: ${{ steps.package.outputs.version }}
+        shell: bash
+        run: |
+          test -n "$VPS_DEPLOY_KEY"
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$VPS_DEPLOY_KEY" > "$HOME/.ssh/cargohub_deploy"
+          chmod 600 "$HOME/.ssh/cargohub_deploy"
+          trap 'rm -f "$HOME/.ssh/cargohub_deploy"' EXIT
+          cp deployment/csharp/known_hosts "$HOME/.ssh/known_hosts"
+          cd "$RUNNER_TEMP/release"
+          sha256sum --check "CargoHub_API_version_$VERSION.zip.sha256"
+          ssh -T -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=yes \
+            -i "$HOME/.ssh/cargohub_deploy" cargohub-deploy@145.24.237.22 \
+            < "CargoHub_API_version_$VERSION.zip"
+      - name: Check public V2 endpoints
+        run: |
+          curl --fail --retry 5 --retry-delay 2 http://145.24.237.22/api/v2/warehouses
+          curl --fail --retry 5 --retry-delay 2 --output /dev/null http://145.24.237.22/api/v2/swagger/index.html
+          curl --fail --retry 5 --retry-delay 2 --output /dev/null http://145.24.237.22/api/v2/swagger/v2/swagger.json
