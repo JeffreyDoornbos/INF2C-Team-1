@@ -1,0 +1,5188 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "CargoHub API",
+    "description": "Interactieve documentatie van de huidige C#-API. Kies een endpoint, klik op Try it out en daarna Execute. De voorbeelden zijn fictief. Schrijfacties wijzigen de aangesloten database. Authenticatie is nog niet geïmplementeerd: er is momenteel geen API-sleutel nodig. Voor een korte demonstratie: maak een artikelgroep met ID 900001, haal deze op, wijzig de naam en verwijder de groep weer. Gebruik daarvoor een aparte demodatabase.",
+    "version": "v2"
+  },
+  "paths": {
+    "/api/v2/items": {
+      "get": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: lijst ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetItems",
+        "parameters": [
+          {
+            "name": "item_line",
+            "in": "query",
+            "description": "Optioneel filter op dit ID. Meerdere filters worden gecombineerd (EN). Laat leeg om niet te filteren.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          },
+          {
+            "name": "item_group",
+            "in": "query",
+            "description": "Optioneel filter op dit ID. Meerdere filters worden gecombineerd (EN). Laat leeg om niet te filteren.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          },
+          {
+            "name": "item_type",
+            "in": "query",
+            "description": "Optioneel filter op dit ID. Meerdere filters worden gecombineerd (EN). Laat leeg om niet te filteren.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          },
+          {
+            "name": "supplier",
+            "in": "query",
+            "description": "Optioneel filter op dit ID. Meerdere filters worden gecombineerd (EN). Laat leeg om niet te filteren.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "code": "DEMO-ITEM",
+                    "description": "Demo artikel",
+                    "barcode": "1234567890123",
+                    "model_number": "DEMO-01",
+                    "commodity_code": "123456",
+                    "unit_weight": 1.5,
+                    "item_line_id": 1,
+                    "item_group_id": 1,
+                    "item_type_id": 1,
+                    "min_purchase_qty": 1,
+                    "case_size": 1,
+                    "packaging_type": "Box",
+                    "order_multiple": 1,
+                    "supplier_id": 1,
+                    "supplier_sku": "DEMO-SKU",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Een opgegeven filter moet een geheel getal zijn.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Een opgegeven filter moet een geheel getal zijn.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: aanmaken",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. commodity_code is momenteel tekst: gebruik aanhalingstekens. item_group_id, item_line_id, item_type_id en supplier_id moeten bestaan. ",
+        "operationId": "AddItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Demo artikel",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Demo artikel",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Demo artikel",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-ITEM",
+                  "description": "Demo artikel",
+                  "barcode": "1234567890123",
+                  "model_number": "DEMO-01",
+                  "commodity_code": "123456",
+                  "unit_weight": 1.5,
+                  "item_line_id": 1,
+                  "item_group_id": 1,
+                  "item_type_id": 1,
+                  "min_purchase_qty": 1,
+                  "case_size": 1,
+                  "packaging_type": "Box",
+                  "order_multiple": 1,
+                  "supplier_id": 1,
+                  "supplier_sku": "DEMO-SKU",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/items/{id}": {
+      "get": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: één record ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-ITEM",
+                  "description": "Demo artikel",
+                  "barcode": "1234567890123",
+                  "model_number": "DEMO-01",
+                  "commodity_code": "123456",
+                  "unit_weight": 1.5,
+                  "item_line_id": 1,
+                  "item_group_id": 1,
+                  "item_type_id": 1,
+                  "min_purchase_qty": 1,
+                  "case_size": 1,
+                  "packaging_type": "Box",
+                  "order_multiple": 1,
+                  "supplier_id": 1,
+                  "supplier_sku": "DEMO-SKU",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: wijzigen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. commodity_code is momenteel tekst: gebruik aanhalingstekens. item_group_id, item_line_id, item_type_id en supplier_id moeten bestaan. ",
+        "operationId": "UpdateItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Gewijzigd tijdens de presentatie",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Gewijzigd tijdens de presentatie",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-ITEM",
+                "description": "Gewijzigd tijdens de presentatie",
+                "barcode": "1234567890123",
+                "model_number": "DEMO-01",
+                "commodity_code": "123456",
+                "unit_weight": 1.5,
+                "item_line_id": 1,
+                "item_group_id": 1,
+                "item_type_id": 1,
+                "min_purchase_qty": 1,
+                "case_size": 1,
+                "packaging_type": "Box",
+                "order_multiple": 1,
+                "supplier_id": 1,
+                "supplier_sku": "DEMO-SKU"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-ITEM",
+                  "description": "Demo artikel",
+                  "barcode": "1234567890123",
+                  "model_number": "DEMO-01",
+                  "commodity_code": "123456",
+                  "unit_weight": 1.5,
+                  "item_line_id": 1,
+                  "item_group_id": 1,
+                  "item_type_id": 1,
+                  "min_purchase_qty": 1,
+                  "case_size": 1,
+                  "packaging_type": "Box",
+                  "order_multiple": 1,
+                  "supplier_id": 1,
+                  "supplier_sku": "DEMO-SKU",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: verwijderen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. ",
+        "operationId": "DeleteItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/items/{id}/inventory": {
+      "get": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: voorraadregels ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetInventoriesForItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inventory"
+                  }
+                },
+                "example": [
+                  {
+                    "item_id": 1,
+                    "location_id": 1,
+                    "quantity_on_hand": 10,
+                    "quantity_expected": 3,
+                    "quantity_ordered": 2,
+                    "quantity_allocated": 1,
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      }
+    },
+    "/api/v2/items/{id}/inventory/totals": {
+      "get": {
+        "tags": [
+          "Artikelen - Artur"
+        ],
+        "summary": "Artikelen: voorraadtotalen berekenen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. total_available is de som van quantity_on_hand min quantity_allocated. ",
+        "operationId": "GetInventoryTotalsForItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventoryTotalsExample"
+                },
+                "example": {
+                  "total_expected": 3,
+                  "total_ordered": 2,
+                  "total_allocated": 1,
+                  "total_available": 9
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      }
+    },
+    "/api/v2/item_groups": {
+      "get": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: lijst ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetItemGroups",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemGroup"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Demo classificatie",
+                    "description": "Aangemaakt tijdens de presentatie",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: aanmaken",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. ",
+        "operationId": "AddItemGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "Dit ID bestaat al.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "Dit ID bestaat al."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_groups/{id}": {
+      "get": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: één record ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetItemGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record gevonden. Onbekend ID geeft ook 200 met JSON null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemGroup"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Demo classificatie",
+                  "description": "Aangemaakt tijdens de presentatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: wijzigen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "UpdateItemGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemGroup"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: verwijderen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "DeleteItemGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "De classificatie wordt nog gebruikt door artikelen.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "De classificatie wordt nog gebruikt door artikelen."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_groups/{id}/items": {
+      "get": {
+        "tags": [
+          "Artikelgroepen - Jeffrey"
+        ],
+        "summary": "Artikelgroepen: gekoppelde artikel-ID's ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Dit antwoord bevat alleen artikel-ID's. Een onbekende classificatie geeft een lege lijst. ",
+        "operationId": "GetItemsItemGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_lines": {
+      "get": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: lijst ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetItemLines",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemLine"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Demo classificatie",
+                    "description": "Aangemaakt tijdens de presentatie",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: aanmaken",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. ",
+        "operationId": "AddItemLine",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "Dit ID bestaat al.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "Dit ID bestaat al."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_lines/{id}": {
+      "get": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: één record ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetItemLine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record gevonden. Onbekend ID geeft ook 200 met JSON null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemLine"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Demo classificatie",
+                  "description": "Aangemaakt tijdens de presentatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: wijzigen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "UpdateItemLine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemLine"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: verwijderen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "DeleteItemLine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "De classificatie wordt nog gebruikt door artikelen.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "De classificatie wordt nog gebruikt door artikelen."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_lines/{id}/items": {
+      "get": {
+        "tags": [
+          "Artikellijnen - Jeffrey"
+        ],
+        "summary": "Artikellijnen: gekoppelde artikel-ID's ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Dit antwoord bevat alleen artikel-ID's. Een onbekende classificatie geeft een lege lijst. ",
+        "operationId": "GetItemsForItemLine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_types/{id}/items": {
+      "get": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: gekoppelde artikel-ID's ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Dit antwoord bevat alleen artikel-ID's. Een onbekende classificatie geeft een lege lijst. ",
+        "operationId": "GetItemsForItemType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_types": {
+      "get": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: lijst ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetItemTypes",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemType"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Demo classificatie",
+                    "description": "Aangemaakt tijdens de presentatie",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: aanmaken",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. ",
+        "operationId": "AddItemType",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo classificatie",
+                "description": "Aangemaakt tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "Dit ID bestaat al.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "Dit ID bestaat al."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/item_types/{id}": {
+      "get": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: één record ophalen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetItemType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record gevonden. Onbekend ID geeft ook 200 met JSON null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemType"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Demo classificatie",
+                  "description": "Aangemaakt tijdens de presentatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: wijzigen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "UpdateItemType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemType"
+              },
+              "example": {
+                "id": 900001,
+                "name": "Demo gewijzigd",
+                "description": "Gewijzigd tijdens de presentatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Artikeltypen - Jeffrey"
+        ],
+        "summary": "Artikeltypen: verwijderen",
+        "description": "**Gemaakt door: Jeffrey Doornbos.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. Een onbekend ID geeft 200 zonder wijziging. ",
+        "operationId": "DeleteItemType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "409": {
+            "description": "De classificatie wordt nog gebruikt door artikelen.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "status": 409,
+                  "title": "De classificatie wordt nog gebruikt door artikelen."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/clients": {
+      "get": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/clients/{id}": {
+      "get": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/clients/{id}/orders": {
+      "get": {
+        "tags": [
+          "Klanten - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/suppliers/{id}/items": {
+      "get": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "summary": "Leveranciers: artikelen ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetItemsForSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "code": "DEMO-ITEM",
+                    "description": "Demo artikel",
+                    "barcode": "1234567890123",
+                    "model_number": "DEMO-01",
+                    "commodity_code": "123456",
+                    "unit_weight": 1.5,
+                    "item_line_id": 1,
+                    "item_group_id": 1,
+                    "item_type_id": 1,
+                    "min_purchase_qty": 1,
+                    "case_size": 1,
+                    "packaging_type": "Box",
+                    "order_multiple": 1,
+                    "supplier_id": 1,
+                    "supplier_sku": "DEMO-SKU",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/suppliers": {
+      "get": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/suppliers/{id}": {
+      "get": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Leveranciers - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/locations": {
+      "get": {
+        "tags": [
+          "Locaties - Artur"
+        ],
+        "summary": "Locaties: lijst ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetLocations",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Location"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "warehouse_id": 1,
+                    "code": "DEMO-A-01",
+                    "name": "Demo opslaglocatie",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Locaties - Artur"
+        ],
+        "summary": "Locaties: aanmaken",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. warehouse_id moet bestaan. ",
+        "operationId": "AddLocation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo opslaglocatie"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo opslaglocatie"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo opslaglocatie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                },
+                "example": {
+                  "id": 1,
+                  "warehouse_id": 1,
+                  "code": "DEMO-A-01",
+                  "name": "Demo opslaglocatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/locations/{id}": {
+      "get": {
+        "tags": [
+          "Locaties - Artur"
+        ],
+        "summary": "Locaties: één record ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetLocation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                },
+                "example": {
+                  "id": 1,
+                  "warehouse_id": 1,
+                  "code": "DEMO-A-01",
+                  "name": "Demo opslaglocatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locaties - Artur"
+        ],
+        "summary": "Locaties: wijzigen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. warehouse_id moet bestaan. ",
+        "operationId": "UpdateLocation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo gewijzigd"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo gewijzigd"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "example": {
+                "id": 900001,
+                "warehouse_id": 1,
+                "code": "DEMO-A-01",
+                "name": "Demo gewijzigd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                },
+                "example": {
+                  "id": 1,
+                  "warehouse_id": 1,
+                  "code": "DEMO-A-01",
+                  "name": "Demo opslaglocatie",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locaties - Artur"
+        ],
+        "summary": "Locaties: verwijderen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. ",
+        "operationId": "DeleteLocation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/warehouses": {
+      "get": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: lijst ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetWarehouses",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Warehouse"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "code": "DEMO-WH",
+                    "name": "Demo magazijn",
+                    "address": "Voorbeeldstraat 1",
+                    "city": "Rotterdam",
+                    "zip_code": "3000AA",
+                    "province": "Zuid-Holland",
+                    "country": "NL",
+                    "contact_name": "Demo contact",
+                    "contact_phone": "0100000000",
+                    "contact_email": "demo@example.com",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: aanmaken",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. ",
+        "operationId": "AddWarehouse",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo magazijn",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo magazijn",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo magazijn",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Warehouse"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-WH",
+                  "name": "Demo magazijn",
+                  "address": "Voorbeeldstraat 1",
+                  "city": "Rotterdam",
+                  "zip_code": "3000AA",
+                  "province": "Zuid-Holland",
+                  "country": "NL",
+                  "contact_name": "Demo contact",
+                  "contact_phone": "0100000000",
+                  "contact_email": "demo@example.com",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/warehouses/{id}": {
+      "get": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: één record ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetWarehouse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Warehouse"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-WH",
+                  "name": "Demo magazijn",
+                  "address": "Voorbeeldstraat 1",
+                  "city": "Rotterdam",
+                  "zip_code": "3000AA",
+                  "province": "Zuid-Holland",
+                  "country": "NL",
+                  "contact_name": "Demo contact",
+                  "contact_phone": "0100000000",
+                  "contact_email": "demo@example.com",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: wijzigen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. ",
+        "operationId": "UpdateWarehouse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo gewijzigd",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo gewijzigd",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Warehouse"
+              },
+              "example": {
+                "id": 900001,
+                "code": "DEMO-WH",
+                "name": "Demo gewijzigd",
+                "address": "Voorbeeldstraat 1",
+                "city": "Rotterdam",
+                "zip_code": "3000AA",
+                "province": "Zuid-Holland",
+                "country": "NL",
+                "contact_name": "Demo contact",
+                "contact_phone": "0100000000",
+                "contact_email": "demo@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Warehouse"
+                },
+                "example": {
+                  "id": 1,
+                  "code": "DEMO-WH",
+                  "name": "Demo magazijn",
+                  "address": "Voorbeeldstraat 1",
+                  "city": "Rotterdam",
+                  "zip_code": "3000AA",
+                  "province": "Zuid-Holland",
+                  "country": "NL",
+                  "contact_name": "Demo contact",
+                  "contact_phone": "0100000000",
+                  "contact_email": "demo@example.com",
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: verwijderen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. ",
+        "operationId": "DeleteWarehouse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/warehouses/{id}/locations": {
+      "get": {
+        "tags": [
+          "Magazijnen - Artur"
+        ],
+        "summary": "Magazijnen: gekoppelde locaties ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetLocationsInWarehouse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Location"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "warehouse_id": 1,
+                    "code": "DEMO-A-01",
+                    "name": "Demo opslaglocatie",
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{id}/items": {
+      "get": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderItemWriteRequest"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderItemWriteRequest"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderItemWriteRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/orders": {
+      "get": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderWriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Orders - Ihssane"
+        ],
+        "description": "**Gemaakt door: Ihssane.**\n\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/transfers": {
+      "get": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: lijst met artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Geen resultaten geeft een lege lijst. ",
+        "operationId": "TransfersController_GetTransfers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: aanmaken",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "TransfersController_AddTransfer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/transfers/{id}": {
+      "get": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: één record met artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Een onbekend ID geeft 200 met JSON null. ",
+        "operationId": "TransfersController_GetTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: wijzigen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "TransfersController_UpdateTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: verwijderen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "TransfersController_RemoveTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/transfers/{id}/items": {
+      "get": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Geen resultaten geeft een lege lijst. ",
+        "operationId": "TransfersController_GetItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferLineResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferLineResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferLineResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/transfers/{id}/commit": {
+      "put": {
+        "tags": [
+          "Transfers - Anmol"
+        ],
+        "summary": "Transfers: verwerken en voorraad verplaatsen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Verplaatst beschikbare voorraad transactioneel van bron naar bestemming en zet de status op Processed. Herhalen verplaatst geen tweede keer voorraad. Onvoldoende beschikbare voorraad geeft 409. Een verwerkte transfer kan niet meer worden gewijzigd of verwijderd. ",
+        "operationId": "TransfersController_CommitTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "404": {
+            "description": "De transfer bestaat niet.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/inventories": {
+      "get": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: lijst ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Geen resultaten geeft een lege JSON-array. ",
+        "operationId": "GetInventories",
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inventory"
+                  }
+                },
+                "example": [
+                  {
+                    "item_id": 1,
+                    "location_id": 1,
+                    "quantity_on_hand": 10,
+                    "quantity_expected": 3,
+                    "quantity_ordered": 2,
+                    "quantity_allocated": 1,
+                    "created_at": "2026-11-02T10:00:00Z",
+                    "updated_at": "2026-11-02T10:00:00Z"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: voorraad toevoegen of bijwerken",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. item_id en location_id moeten bestaan. Hoeveelheden zijn niet negatief en quantity_allocated mag niet groter zijn dan quantity_on_hand. POST werkt een bestaande combinatie bij. ",
+        "operationId": "AddInventory",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                },
+                "example": {
+                  "item_id": 1,
+                  "location_id": 1,
+                  "quantity_on_hand": 10,
+                  "quantity_expected": 3,
+                  "quantity_ordered": 2,
+                  "quantity_allocated": 1,
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/inventories/{id}": {
+      "get": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: oude ID-route (altijd 404)",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Voorraad heeft geen los ID. Gebruik /api/v1/inventories/{itemId}/{locationId}.",
+        "operationId": "GetInventoryById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Deze oude route retourneert altijd 404."
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/v2/inventories/{itemId}/{locationId}": {
+      "get": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: één record ophalen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. ",
+        "operationId": "GetInventory",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          },
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gegevens opgehaald.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                },
+                "example": {
+                  "item_id": 1,
+                  "location_id": 1,
+                  "quantity_on_hand": 10,
+                  "quantity_expected": 3,
+                  "quantity_ordered": 2,
+                  "quantity_allocated": 1,
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: wijzigen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. created_at en updated_at hoef je niet mee te sturen. De server beheert deze tijdstippen; PUT behoudt created_at. Het pad bepaalt het record. PUT vervangt de wijzigbare velden; stuur alle benodigde velden mee. item_id en location_id moeten bestaan. Hoeveelheden zijn niet negatief en quantity_allocated mag niet groter zijn dan quantity_on_hand. POST werkt een bestaande combinatie bij. ",
+        "operationId": "UpdateInventory",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          },
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "item_id": 900001,
+                "location_id": 900001,
+                "quantity_on_hand": 10,
+                "quantity_expected": 3,
+                "quantity_ordered": 2,
+                "quantity_allocated": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                },
+                "example": {
+                  "status": 400,
+                  "title": "Ongeldige JSON, verkeerd datatype of ontbrekende verplichte body/tekstvelden.",
+                  "errors": {
+                    "$": [
+                      "De JSON-body kan niet worden verwerkt."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Opgeslagen record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                },
+                "example": {
+                  "item_id": 1,
+                  "location_id": 1,
+                  "quantity_on_hand": 10,
+                  "quantity_expected": 3,
+                  "quantity_ordered": 2,
+                  "quantity_allocated": 1,
+                  "created_at": "2026-11-02T10:00:00Z",
+                  "updated_at": "2026-11-02T10:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Voorraad - Artur"
+        ],
+        "summary": "Voorraad: verwijderen",
+        "description": "**Gemaakt door: Artur.**\n\nVoorbeelden zijn fictief en gebruiken snake_case-veldnamen. Deze aanvraag wijzigt de aangesloten database. ",
+        "operationId": "DeleteInventory",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          },
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID van het record. Gebruik een bestaand ID uit de GET-lijst, of 900001 voor je eigen demorecord.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "404": {
+            "description": "Het record bestaat niet."
+          },
+          "500": {
+            "description": "Huidige beperking: databaseconflicten of constraintfouten worden nog niet gecontroleerd afgehandeld."
+          }
+        }
+      }
+    },
+    "/api/v2/shipments": {
+      "get": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: lijst met artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Geen resultaten geeft een lege lijst. ",
+        "operationId": "ShipmentsController_GetShipments",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: aanmaken",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "ShipmentsController_AddShipment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shipments/{id}": {
+      "get": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: één record met artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Een onbekend ID geeft 200 met JSON null. ",
+        "operationId": "ShipmentsController_GetShipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: wijzigen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "ShipmentsController_UpdateShipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentWriteRequest"
+              },
+              "example": {
+                "id": 900001,
+                "reference": "DEMO-TRANSFER",
+                "from_location_id": 124,
+                "to_location_id": 1,
+                "transfer_status": "Scheduled",
+                "items": [
+                  {
+                    "item_id": 119,
+                    "amount": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: verwijderen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "ShipmentsController_RemoveShipment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shipments/{id}/items": {
+      "get": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: artikelregels ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Geen resultaten geeft een lege lijst. ",
+        "operationId": "ShipmentsController_GetItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentLineResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentLineResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShipmentLineResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: artikelregels vervangen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "ShipmentsController_UpdateItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ShipmentLineRequest"
+                }
+              },
+              "example": [
+                {
+                  "item_id": 1,
+                  "amount": 1
+                }
+              ]
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ShipmentLineRequest"
+                }
+              },
+              "example": [
+                {
+                  "item_id": 1,
+                  "amount": 1
+                }
+              ]
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ShipmentLineRequest"
+                }
+              },
+              "example": [
+                {
+                  "item_id": 1,
+                  "amount": 1
+                }
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shipments/{id}/orders": {
+      "get": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: gekoppelde order-ID's ophalen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Geen resultaten geeft een lege lijst. ",
+        "operationId": "ShipmentsController_GetOrders",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Zendingen - Anmol"
+        ],
+        "summary": "Transfers: gekoppelde order instellen",
+        "description": "**Gemaakt door: Anmol Haribhajan.**\n\nVoorbeelden zijn fictief. Gebruik bestaande artikel-, locatie- en order-ID's uit je database. Deze aanvraag wijzigt de aangesloten database. Succes geeft een lege responsebody. Controleer vóór commit de beschikbare voorraad op de bronlocatie. Het voorbeeld gebruikt artikel 119 op locatie 124 uit de oude importdata. Bron en bestemming moeten bestaan en verschillen. Artikelregels moeten uniek zijn en een positief geheel aantal hebben. POST maakt de status Scheduled; gebruik commit om te verwerken. PUT met items=null behoudt de regels. Een onbekend ID bij PUT of DELETE geeft 200 zonder wijziging. ",
+        "operationId": "ShipmentsController_UpdateOrders",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Record-ID; gebruik 900001 voor het eigen demorecord, als dat ID nog vrij is.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 900001
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "example": [
+                1
+              ]
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "example": [
+                1
+              ]
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "example": [
+                1
+              ]
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Geslaagd, lege responsebody."
+          },
+          "400": {
+            "description": "Ongeldige invoer, onbekende verwijzing of overtreden databaseregel.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Dit ID bestaat al, onvoldoende voorraad of een statusconflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Inventory": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "location_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity_on_hand": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity_expected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity_ordered": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity_allocated": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InventoryTotalsExample": {
+        "type": "object",
+        "properties": {
+          "total_expected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_ordered": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_allocated": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total_available": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "barcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "model_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "commodity_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit_weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "item_line_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "item_group_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "item_type_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min_purchase_qty": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "case_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "packaging_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_multiple": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supplier_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supplier_sku": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemGroup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemLine": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "warehouse_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderItemWriteRequest": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unit_price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderWriteRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "client_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "order_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "request_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "customer_po_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipping_notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "warehouse_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ship_to_client_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bill_to_client_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemWriteRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "ShipmentLineRequest": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ShipmentLineResponse": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ShipmentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "shipment_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shipment_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipment_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "carrier_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipping_method": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentLineResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ShipmentWriteRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "shipment_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shipment_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipment_status": {
+            "pattern": "^(Scheduled|Transit|Delivered)$",
+            "type": "string",
+            "nullable": true
+          },
+          "carrier_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "shipping_method": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentLineRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Supplier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransferLineRequest": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransferLineResponse": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransferResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "from_location_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "to_location_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transfer_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransferLineResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransferWriteRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "from_location_id": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "to_location_id": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "transfer_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransferLineRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "Warehouse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Artikelen - Artur",
+      "description": "Endpoints geïmplementeerd door Artur."
+    },
+    {
+      "name": "Artikelgroepen - Jeffrey",
+      "description": "CRUD omgezet door Jeffrey Doornbos. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+    },
+    {
+      "name": "Artikellijnen - Jeffrey",
+      "description": "CRUD omgezet door Jeffrey Doornbos. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+    },
+    {
+      "name": "Artikeltypen - Jeffrey",
+      "description": "CRUD omgezet door Jeffrey Doornbos. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+    },
+    {
+      "name": "Klanten - Ihssane",
+      "description": "Endpoints geïmplementeerd door Ihssane."
+    },
+    {
+      "name": "Leveranciers - Ihssane",
+      "description": "CRUD geïmplementeerd door Ihssane. De gekoppelde GET /{id}/items-route is geïmplementeerd door Artur."
+    },
+    {
+      "name": "Locaties - Artur",
+      "description": "Endpoints geïmplementeerd door Artur."
+    },
+    {
+      "name": "Magazijnen - Artur",
+      "description": "Endpoints geïmplementeerd door Artur."
+    },
+    {
+      "name": "Orders - Ihssane",
+      "description": "Endpoints geïmplementeerd door Ihssane."
+    },
+    {
+      "name": "Transfers - Anmol",
+      "description": "Endpoints geïmplementeerd door Anmol."
+    },
+    {
+      "name": "Voorraad - Artur",
+      "description": "Endpoints geïmplementeerd door Artur."
+    },
+    {
+      "name": "Zendingen - Anmol",
+      "description": "Endpoints geïmplementeerd door Anmol."
+    }
+  ]
+}

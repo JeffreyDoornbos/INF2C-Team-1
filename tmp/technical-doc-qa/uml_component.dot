@@ -1,0 +1,29 @@
+digraph G {graph [bgcolor="transparent", fontname="Arial", ranksep=0.55, nodesep=0.35, pad=0.15]; node [shape=record, style="rounded,filled", fillcolor="#f3f5f8", color="#aab5c5", fontname="Arial", fontsize=16, margin="0.16,0.12"]; edge [fontname="Arial", fontsize=12, color="#66758a", arrowsize=0.65]; rankdir=TB;
+client [shape=component,label="«client»
+Bruno of browser",fillcolor="#ffffff"];
+proxy [shape=component,label="«component»
+Nginx reverse proxy"];
+py [shape=component,label="«component»
+Python API V1
+api/main.py"];
+json [shape=folder,label="JSON-brondata
+data/*.json"];
+subgraph cluster_api {label="«subsystem» CargoHub C# API V2";fontname="Arial";color="#bdc6d3";style=rounded;
+controllers [shape=component,label="Controllers
+HTTP en responses"];
+services [shape=component,label="ShipmentService / TransferService
+Procesregels en transacties"];
+stores [shape=component,label="ShipmentItemStore / TransferItemStore
+Gekoppelde artikelregels"];
+dbcontext [shape=component,label="CargoHubDbContext
+EF Core en mapping"];
+controllers -> services [label="zendingen / transfers"];
+controllers -> dbcontext [label="overige CRUD"];
+services -> stores;services -> dbcontext;stores -> dbcontext;}
+pg [shape=cylinder,label="PostgreSQL 16
+15 zakelijke tabellen"];
+client -> proxy [label="HTTP :80"];
+proxy -> controllers [label="/api/v2/*"];
+proxy -> py [label="/api/v1/*"];
+py -> json;dbcontext -> pg [label="SQL via Npgsql"];
+}

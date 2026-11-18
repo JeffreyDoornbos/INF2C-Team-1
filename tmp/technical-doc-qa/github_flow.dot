@@ -1,0 +1,12 @@
+digraph G {graph [bgcolor="transparent", fontname="Arial", ranksep=0.55, nodesep=0.35, pad=0.15]; node [shape=record, style="rounded,filled", fillcolor="#f3f5f8", color="#aab5c5", fontname="Arial", fontsize=16, margin="0.16,0.12"]; edge [fontname="Arial", fontsize=12, color="#66758a", arrowsize=0.65]; rankdir=LR;node [shape=box];
+issue [label="Issue / taak"];
+branch [label="Featurebranch
+feature/ch-xxx-onderwerp"];
+commit [label="Code + tests
+Kleine commits"];
+pr [label="Pull request
+Teamreview + CI"];
+main [label="Merge naar main",fillcolor="#fbeef1"];
+live [label="Release + deployment"];
+issue->branch->commit->pr->main->live;
+}
