@@ -16,6 +16,14 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Connection "";
 
+    # Administration is served only over HTTPS; the short-lived IP certificate
+    # uses an HTTP-01 challenge on the isolated dashboard listener.
+    location ^~ /.well-known/acme-challenge/ {
+        proxy_pass http://host.docker.internal:8765;
+    }
+    location = /beheer { return 302 https://145.24.237.22/beheer/; }
+    location /beheer/ { return 302 https://145.24.237.22$request_uri; }
+
     location = / { return 302 /api/v2; }
     location = /swagger { return 302 /api/v2/swagger/index.html; }
     location = /swagger/ { return 302 /api/v2/swagger/index.html; }

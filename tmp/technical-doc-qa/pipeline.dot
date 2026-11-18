@@ -1,0 +1,23 @@
+digraph G {graph [bgcolor="transparent", fontname="Arial", ranksep=0.55, nodesep=0.35, pad=0.15]; node [shape=record, style="rounded,filled", fillcolor="#f3f5f8", color="#aab5c5", fontname="Arial", fontsize=16, margin="0.16,0.12"]; edge [fontname="Arial", fontsize=12, color="#66758a", arrowsize=0.65]; rankdir=TB;node [shape=box];
+merge [label="Merge of push naar main",fillcolor="#fbeef1"];
+test [label="GitHub-hosted runner
+Restore → build → unit- en integratietests"];
+release [label="GitHub-hosted runner
+Versie → ZIP + checksums → GitHub Release"];
+runner [label="VPS-runner cargohub-vps
+Haalt opdracht en artifact op via HTTPS"];
+ssh [label="SSH :8422 als cargohub-deploy
+Beperkte sleutel → receive-release.sh"];
+prep [label="deploy.py
+Pakketcontrole → back-up → migraties → beginimport indien nodig"];
+slot [label="Docker Compose
+Start inactieve blue/green API-container"];
+health [shape=diamond,label="Kandidaatchecks
+geslaagd?"];
+nginx [label="Nginx-configuratie wisselen en controleren
+Nieuwe versie live op hetzelfde adres",fillcolor="#fbeef1"];
+stop [label="Stop zonder omschakeling
+Huidige API blijft actief",fillcolor="#ffffff"];
+merge -> test -> release -> runner -> ssh -> prep -> slot -> health;
+health -> nginx [label="ja"];health -> stop [label="nee"];
+}

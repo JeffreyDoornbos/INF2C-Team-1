@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CargoHub Beheer</title>
+  <link rel="stylesheet" href="/beheer/style.css">
+  <script defer src="/beheer/app.js"></script>
+</head>
+<body>
+  <main id="login" class="login-view" hidden>
+    <div class="login-brand brand"><span class="brand-mark">C</span>CargoHub<span class="brand-small">Beheer</span></div>
+    <section class="login-form"><form id="login-form"><h1>Inloggen</h1><p class="muted">Toegang tot de CargoHub serveromgeving.</p>
+      <label for="username">Gebruikersnaam</label><input id="username" name="username" autocomplete="username" required maxlength="80">
+      <label for="password">Wachtwoord</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="250">
+      <button class="primary" type="submit">Inloggen</button><p id="login-error" class="error" role="alert"></p>
+      <p class="login-note">Groep 1 · Software Construction</p>
+    </form></section>
+  </main>
+  <div id="dashboard" hidden>
+    <aside><div class="brand"><span class="brand-mark">C</span>CargoHub</div><p class="nav-label">WERKOMGEVING</p><a class="nav-active" href="/beheer/">◫ <span>Serveroverzicht</span></a><a href="/api/v2/swagger/index.html" target="_blank" rel="noopener">↗ <span>Swagger V2</span></a><a href="https://github.com/JeffreyDoornbos/INF2C-Team-1/actions" target="_blank" rel="noopener">↗ <span>GitHub Actions</span></a>
+      <div class="aside-bottom"><span class="env-dot"></span> Ubuntu VPS <small>145.24.237.22</small></div>
+    </aside>
+    <main class="workspace">
+      <header><div><p class="eyebrow">CARGOHUB / INFRASTRUCTUUR</p><h1>Serveroverzicht</h1><p class="muted">De status van jullie server en applicaties, op één plek.</p></div><div class="account"><span id="username-label"></span><button id="logout" class="quiet">Uitloggen</button></div></header>
+      <div class="live-bar"><span><i class="live-dot"></i><strong id="connection">Verbinding maken</strong><span class="muted" id="updated"></span></span><span id="release" class="release">Versie laden</span></div>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <section class="metrics" aria-label="Serverbelasting">
+        <article class="metric"><div class="metric-top">CPU <span>PROCESSOR</span></div><div class="metric-value" id="cpu">—</div><canvas id="cpu-chart" width="480" height="100" aria-label="CPU-verloop"></canvas><small id="cpu-note">Wordt gemeten</small></article>
+        <article class="metric"><div class="metric-top">Geheugen <span>RAM</span></div><div class="metric-value" id="memory">—</div><div class="meter"><i id="memory-bar"></i></div><small id="memory-note">Wordt gemeten</small></article>
+        <article class="metric"><div class="metric-top">Opslag <span>DISK</span></div><div class="metric-value" id="disk">—</div><div class="meter"><i id="disk-bar"></i></div><small id="disk-note">Wordt gemeten</small></article>
+        <article class="metric"><div class="metric-top">Serveruptime <span>ONLINE</span></div><div class="metric-value uptime" id="uptime">—</div><p class="uptime-sub">Sinds de laatste serverstart</p><small id="load">Wordt gemeten</small></article>
+      </section>
+      <div class="section-heading"><div><h2>Applicaties en services</h2><p class="muted">De actieve V2-versie volgt automatisch het blue/green-slot van de deployment.</p></div><span class="refresh-note">Elke 5 seconden vernieuwd</span></div>
+      <section class="service-list" aria-label="Applicatiestatus">
+        <div class="services-header"><span>Applicatie</span><span>Status</span><span>Uptime</span><span>CPU</span><span>Geheugen</span><span>Beheer</span></div>
+        <div id="services" class="services"></div>
+      </section>
+      <footer><span id="deployment-note"></span><span>CargoHub Beheer · Groep 1</span></footer>
+    </main>
+  </div>
+  <dialog id="confirm-dialog"><form method="dialog"><p class="eyebrow">BEHEERACTIE</p><h2 id="confirm-title"></h2><p id="confirm-description"></p><div class="dialog-buttons"><button value="cancel" class="secondary">Annuleren</button><button value="confirm" class="primary" id="confirm-action">Bevestigen</button></div></form></dialog>
+</body></html>

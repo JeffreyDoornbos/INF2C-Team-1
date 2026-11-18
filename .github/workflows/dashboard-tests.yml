@@ -1,0 +1,31 @@
+name: Administration dashboard checks
+
+on:
+  push:
+    paths:
+      - 'deployment/dashboard/**'
+      - '.github/workflows/dashboard-tests.yml'
+  pull_request:
+    paths:
+      - 'deployment/dashboard/**'
+      - '.github/workflows/dashboard-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dashboard:
+    name: Dashboard authentication and command boundary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Test login, sessions and allowed actions
+        run: python3 -m unittest discover -s deployment/dashboard/tests -v
+      - name: Check JavaScript and install scripts
+        run: |
+          node --check deployment/dashboard/static/app.js
+          bash -n deployment/dashboard/install.sh deployment/dashboard/enable-https.sh
