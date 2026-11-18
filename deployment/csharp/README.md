@@ -30,14 +30,22 @@ Alleen een geslaagde run op `main` maakt vervolgens een releasepakket, bijvoorbe
 idempotente EF-migraties, de actuele JSON-beginimport en een checksummanifest.
 De pipeline publiceert het pakket als GitHub Release en artifact.
 
-GitHub Actions uploadt het pakket **via SSH op poort 8422** naar `cargohub-deploy@145.24.237.22`.
+Build en tests draaien op GitHub-hosted runners. De uiteindelijke deployjob draait
+op de aparte `cargohub-vps`-runner op de VPS. Deze worker maakt een uitgaande
+HTTPS-verbinding met GitHub, omdat de schoolfirewall inkomende SSH-verbindingen
+vanaf GitHub-cloudrunners tegenhoudt. De worker downloadt het geteste artifact en
+uploadt het pakket **via SSH op poort 8422** naar `cargohub-deploy@145.24.237.22`.
 De sleutel staat uitsluitend in het repository-secret `VPS_DEPLOY_KEY`.
 `known_hosts` bevat de via de bestaande SSH-verbinding gecontroleerde publieke
 hostkey. De deploysleutel mag alleen de release-ontvanger uitvoeren: geen
 interactieve shell, poortforwarding of algemene sudo-toegang. De aparte listener
 accepteert alleen deze deploygebruiker en sleutel, geen wachtwoorden. Hij gebruikt
 poort 8422 omdat de GitHub-runner poort 22 niet kan bereiken. De bestaande
-beheerdersverbinding op poort 22 blijft ongewijzigd.
+beheerdersverbinding op poort 22 blijft ongewijzigd. De worker draait als de
+afzonderlijke gebruiker `cargohub-runner`, zonder Docker-groep of sudo-rechten.
+Alleen de beperkte SSH-releaseontvanger mag de daadwerkelijke uitrol uitvoeren.
+De workflow en een job-start-hook beperken de VPS-worker tot de eigen repository
+en `main`; builds en pull-request-tests draaien niet op de VPS-worker.
 
 ## Uitrol en behoud van data
 
@@ -66,6 +74,7 @@ cd /opt/cargohub-v2
 sudo docker compose ps
 sudo docker compose logs --tail 50 api-blue api-green
 sudo cat /opt/cargohub-v2/deployment.json
+sudo systemctl status 'actions.runner.*'
 ```
 
 De server bewaart `.env` met een willekeurig gegenereerd databasewachtwoord als
@@ -94,3 +103,9 @@ ssh -T -p 8422 -i /pad/naar/deploy-key cargohub-deploy@145.24.237.22 \
 De eerste installatie maakt nieuwe V2-bestanden en wijzigt de bestaande
 Python-code, JSON-data en systemd-service niet. Docker start de containers na
 een herstart opnieuw met `restart: unless-stopped`.
+
+Voor een nieuwe VPS registreert een repositorybeheerder ook de deployrunner met
+`install-runner.py`, een kortlevend GitHub-runnerregistratietoken en de officiële
+runner-downloadmetadata inclusief SHA-256. Kopieer geen persoonlijk GitHub-token
+of VM-wachtwoord naar de worker. GitHub toont de worker onder Settings > Actions
+> Runners. De runner-service start automatisch na een herstart.
