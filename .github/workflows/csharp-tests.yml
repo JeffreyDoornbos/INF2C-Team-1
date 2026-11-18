@@ -60,14 +60,16 @@ jobs:
             TestResults/**/coverage.cobertura.xml
           if-no-files-found: warn
 
-  release-and-deploy:
-    name: Versioned release and SSH deployment
+  release:
+    name: Build versioned release
     needs: test
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: write
+    outputs:
+      version: ${{ steps.package.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -93,10 +95,27 @@ jobs:
           gh release create "v$VERSION" "$RUNNER_TEMP/release/"* \
             --target "$GITHUB_SHA" --title "CargoHub API $VERSION" \
             --notes "Tested C# V2 release for Docker Compose and PostgreSQL. Commit: $GITHUB_SHA."
+
+  deploy:
+    name: Deploy over SSH from VPS runner
+    needs: release
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # The school firewall blocks inbound SSH from GitHub-hosted runners.
+    # This unprivileged worker connects outbound to GitHub and deploys through
+    # the same restricted SSH account. It has no direct Docker/sudo permission.
+    runs-on: [self-hosted, linux, x64, cargohub-vps]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the tested release package
+        uses: actions/download-artifact@v4
+        with:
+          name: CargoHub_API_version_${{ needs.release.outputs.version }}
+          path: ${{ runner.temp }}/release
       - name: Deploy over restricted SSH connection
         env:
           VPS_DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
-          VERSION: ${{ steps.package.outputs.version }}
+          VERSION: ${{ needs.release.outputs.version }}
         shell: bash
         run: |
           test -n "$VPS_DEPLOY_KEY"
